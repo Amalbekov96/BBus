@@ -512,11 +512,11 @@ function update(){
                   lng: position.coords.longitude,
                 };
 
-                  new google.maps.Marker({
-                   position: pos,
-                   map,
-                   title: 'Hello World!',
-                 });
+//                  new google.maps.Marker({
+//                   position: pos,
+//                   map,
+//                   title: 'Hello World!',
+//                 });
 
                 messagewindow.setPosition(pos);
                                                      
