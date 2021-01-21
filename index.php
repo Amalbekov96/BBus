@@ -97,6 +97,8 @@ print ("<html>
       var statewindow = null;
       var labels = '12345';
        var trans_num = 000;
+       
+       
       function initMap() {
 
         map = new google.maps.Map(document.getElementById('map'), {
@@ -104,14 +106,19 @@ print ("<html>
             center: {lat: 42.8640117, lng: 74.5460088 }
          });
        
-        
+
+           
         initListeners();
         initWindows();
         createButton();
         update();
       }
+       
+      
 
       //----------------------------------------
+    
+       
 
       function initWindows(){
         var formStr = `" . FORM_FOR_INPUT . "`;
@@ -271,9 +278,10 @@ print ("<html>
 
            var markerPointed = new google.maps.Marker({
              position: ({lat: location.lat,lng: location.lng}),
-             icon: 'bus.png'
+             icon: './images/icons/bus.png'
           });
-
+                                      
+                                      
           markerPointed.addListener('click', function(){
              if(statewindow) {
               statewindow.close();
@@ -290,9 +298,12 @@ print ("<html>
               statewindow.open(map,markerPointed);
 
           });
+            
           return markerPointed;
         });
-
+       
+       
+       
           // Add a marker clusterer to manage the markers.
 
          var markerCluster = new MarkerClusterer(map, markers,
@@ -302,67 +313,128 @@ print ("<html>
 //--------------------------------------------------------------------
 
 
-function update(){
+//function update(){
+//
+//       options = {
+//         enableHighAccuracy: true,
+//         timeout: 100,
+//         maximumAge: 0
+//       };
+//
+//       const pos = new Object();
+//
+//       var lat = 9;
+//       var lng = 9;
+//
+//       navigator.geolocation.watchPosition(
+//         (position) => {
+//           const pos = {
+//             lat: position.coords.latitude,
+//             lng: position.coords.longitude,
+//           };
+//
+//           lat = position.coords.latitude;
+//           lng = position.coords.longitude;
+////           alert(lat);
+//
+//           var url = 'http://localhost/BBus/UpdatePoint.php?comment=' + trans_num + '&lat=' + lat + '&lng=' + lng;
+//
+//
+//           var xhttp = new XMLHttpRequest();
+//
+//           xhttp.onreadystatechange = function() {
+//
+//             if (xhttp.readyState == 4) {
+//               if (xhttp.status == 205) {
+//
+//               } else if (xhttp.status == 200) {
+//
+//               } else {
+//           alert(xhttp.status);
+//               }
+//
+//               if (xhttp.status == 202) {
+//
+//               }
+//             }
+//
+//           };
+//
+//           xhttp.open('GET', url, true);
+//           xhttp.send();
+//
+//
+//         },
+//         () => {
+//            error();
+//         },
+//         () => {
+//               options();
+//         }
+//       );
+//}
+
+//--------------------------------------------------------------------
        
-       options = {
-         enableHighAccuracy: true,
-         timeout: 100,
-         maximumAge: 0
-       };
-
-       const pos = new Object();
        
-       var lat = 9;
-       var lng = 9;
+       function update(){
+              
+              options = {
+                enableHighAccuracy: false,
+                timeout: 500,
+                maximumAge: 0
+              };
 
-       navigator.geolocation.watchPosition(
-         (position) => {
-           const pos = {
-             lat: position.coords.latitude,
-             lng: position.coords.longitude,
-           };
-                      
-           lat = position.coords.latitude;
-           lng = position.coords.longitude;
-//           alert(lat);
-                                          
-           var url = 'http://localhost/BBus/UpdatePoint.php?comment=' + trans_num + '&lat=' + lat + '&lng=' + lng;
+              const pos = new Object();
+              
+              var lat = 9;
+              var lng = 9;
 
-                                           
-           var xhttp = new XMLHttpRequest();
-           
-           xhttp.onreadystatechange = function() {
-           
-             if (xhttp.readyState == 4) {
-               if (xhttp.status == 205) {
-                                           
-               } else if (xhttp.status == 200) {
-           
-               } else {
-           alert(xhttp.status);
-               }
+              navigator.geolocation.watchPosition(
+                ShowPosition
+                ,
+                () => {
+                   error();
+                },
+                () => {
+                      options();
+                }
+              );
+       }
+       
+//--------------------------------------------------------------------
+       function ShowPosition(position)
+       {
+                  lat = position.coords.latitude;
+                  lng = position.coords.longitude;
+       //           alert(lat);
+                                                 
+                  var url = 'http://localhost/BBus/UpdatePoint.php?comment=' + trans_num + '&lat=' + lat + '&lng=' + lng;
 
-               if (xhttp.status == 202) {
+                                                  
+                  var xhttp = new XMLHttpRequest();
+                  
+                  xhttp.onreadystatechange = function() {
+                  
+                    if (xhttp.readyState == 4) {
+                      if (xhttp.status == 205) {
+                                                  
+                      } else if (xhttp.status == 200) {
+                  
+                      } else {
+                  alert(xhttp.status);
+                      }
 
-               }
-             }
+                      if (xhttp.status == 202) {
 
-           };
-           
-           xhttp.open('GET', url, true);
-           xhttp.send();
-            
+                      }
+                    }
 
-         },
-         () => {
-            error();
-         },
-         () => {
-               options();
-         }
-       );
-}
-
+                  };
+                  
+                  xhttp.open('GET', url, true);
+                  xhttp.send();
+       }
 //--------------------------------------------------------------------
        
    function error(err) {
@@ -631,7 +703,7 @@ function update(){
 
            var markerPointed = new google.maps.Marker({
              position: ({lat: location.lat,lng: location.lng}),
-             icon: 'bus.png'
+             icon: '/images/icons/bus.png'
           });
 
           markerPointed.addListener('click', function(){
