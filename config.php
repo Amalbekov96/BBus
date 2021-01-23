@@ -76,21 +76,17 @@ function filterInput($input)
 }
 
 function ipVerification($ip) {
-<<<<<<< HEAD
+
 	$conn = mysqli_connect("localhost","kushtar","kushtar", "kushtar");
-=======
-	$conn = mysqli_connect("localhost","root","", "BBus");
->>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
+
 	$user_arr = mysqli_query($conn, "SELECT * from Users where ip = '$ip'");
 	$row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
 	return $row['id'];
 }
 
-<<<<<<< HEAD
+
 $conn = mysqli_connect("localhost","kushtar","kushtar", "kushtar");
-=======
-$conn = mysqli_connect("localhost","root","", "BBus");
->>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
+
 
 function htmlGetBack ($prob, $link, $message) {
 	if($prob != "") {
