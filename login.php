@@ -37,11 +37,17 @@
   	}   		
   }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
 $html = '
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+<<<<<<< HEAD
 
     <style>
     .font-robo {
@@ -625,10 +631,18 @@ $html = '
 
     <!-- Main CSS-->
     <link href="ccs/main.css" type="text/css" rel="stylesheet" media="all">
+=======
+    <!-- Title Page-->
+    <title>Au Register Forms by Colorlib</title>
+
+    <link href="ccs/main.css" type="text/css" rel="stylesheet" media="all">
+
+>>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
 </head>
 
 <body>
 
+<<<<<<< HEAD
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
         <div class="wrapper wrapper--w960">
             <div class="card card-2">
@@ -658,6 +672,27 @@ $html = '
             </div>
         </div>
     </div>
+=======
+
+    <h2 class="title">Login</h2>
+    <form action="" method="POST">
+        <div class="input-group">
+            <input class="input--style-2" type="text" placeholder="Username" name="username">
+        </div>
+
+        <div class="input-group">
+            <input class="input--style-2" type="password" placeholder="password" name="password">
+        </div>
+
+        <div class="p-t-30">
+            <button class="btn btn--radius btn--green" type="submit" value ="Submit" name="submit" id="submit" >Login</button>
+        </div>
+    </form>
+
+    <button id="Go_back" class="btn2 btn--radius btn2--green">Go Back</button>
+    <button id="Register" class="btn3 btn3--radius btn3--green">Register</button>
+    <button id="Guest" class="btn4 btn4--radius btn3--green">Guest</button>
+>>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
 
     <script type="text/javascript">
       document.getElementById("Go_back").onclick = function () {
@@ -673,6 +708,7 @@ $html = '
       };
     </script>
 
+<<<<<<< HEAD
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
@@ -684,6 +720,10 @@ $html = '
     <script src="js/global.js"></script>
 
 </body>
+=======
+</body>
+
+>>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
 </html>
 <!-- end document-->
 ';
