@@ -94,7 +94,6 @@ $html = '
 
 <head>
 
-<<<<<<< HEAD
     <style>
     .font-robo {
       font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
@@ -639,27 +638,22 @@ $html = '
 
     <!-- Main CSS-->
     <link href="ccs/main.css" type="text/css" rel="stylesheet" media="all">
-=======
->>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
+
 </head>
 
 <body>
 
-<<<<<<< HEAD
+
     <div class="page-wrapper bg-red p-t-180 p-b-100 font-robo">
         <div class="wrapper wrapper--w960">
             <div class="card card-2">
                 <div class="card-heading"></div>
                 <div class="card-body">
-                    <h2 class="title">Registretion form</h2>
-                    <form action="" method="POST">
-=======
-
 
                     <h2 class="title">Registretion form</h2>
                     <form action="" method="POST">
 
->>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
+
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="Username" name="name">
                         </div>
@@ -683,15 +677,14 @@ $html = '
 
                     <button id="Go_back" class="btn2 btn--radius btn2--green">Go Back</button>
 
-<<<<<<< HEAD
+
                 </div>
             </div>
         </div>
     </div>
 
 
-=======
->>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
+
     <script type="text/javascript">
       document.getElementById("Go_back").onclick = function () {
           location.href = "index.php";
@@ -699,7 +692,6 @@ $html = '
 
     </script>
 
-<<<<<<< HEAD
 
     <!-- Jquery JS-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -711,8 +703,7 @@ $html = '
     <!-- Main JS-->
     <script src="js/global.js"></script>
 
-=======
->>>>>>> 7d6f2759d4b45fa39f3479a29d7cde3d2fa09040
+
 </body>
 </html>
 <!-- end document-->
