@@ -17,11 +17,11 @@ if (!empty($_GET)) {
     $result = mysqli_query($conn,"SELECT * FROM Markers");
     $json = [];
     while($row = mysqli_fetch_assoc($result)){
-      $json[] = $row;
+     $json[] = $row;
     }
 
    $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
-    
+
     echo($json_encoded);
     
     http_response_code(205);
