@@ -17,14 +17,14 @@
 		$row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
 
 		if (strlen($username) == 0 or strlen($password) == 0) {
-		htmlGetBack("You have not authorized with username / password", "index.php", "Go Back");
+		htmlGetBack("You have not authorized with username / password", "index2.php", "Go Back");
 		logAction($conn, "empty", "empty");
 		exit;
 		}
 		else {
 
   		if (strlen($row['id']) == 0) {
-  		htmlGetBack("Incorrect credentials", "index.php", "Go Back");
+  		htmlGetBack("Incorrect credentials", "index2.php", "Go Back");
   		logAction($conn, $username, "fail");
   		exit;
   		}
@@ -32,7 +32,7 @@
   		$_SESSION['username'] = $username;
   		$_SESSION['id'] = $row['id'];
   		logAction($conn, $username, "login");
-  		echo "<script>window.location = 'index.php';</script>";
+  		echo "<script>window.location = 'index2.php';</script>";
   		}
   	}   		
   }
@@ -671,7 +671,7 @@ $html = '
 
     <script type="text/javascript">
       document.getElementById("Go_back").onclick = function () {
-          location.href = "index.php";
+          location.href = "index2.php";
       };
 
       document.getElementById("Register").onclick = function () {
@@ -679,7 +679,7 @@ $html = '
       };
 
       document.getElementById("Guest").onclick = function () {
-      location.href = "index.php";
+      location.href = "index2.php";
       };
     </script>
 
@@ -701,6 +701,6 @@ $html = '
 ';
 
 echo $html;
-htmlGetBack("", "index.php", "Go Back");
+htmlGetBack("", "index2.php", "Go Back");
 
 ?>

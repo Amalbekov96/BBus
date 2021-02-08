@@ -20,20 +20,20 @@ if (!empty($_GET)) {
         echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
         exit;
     }
-     // $id = $_SESSION['id'];
+     $id = $_SESSION['id'];
      $lat = number_format((float)$_GET['lat'], 8, '.', '');// need to sanitize any USER INPUT
      $lon = number_format((float)$_GET['lng'], 8, '.', ''); // need to sanitize any USER INPUT
 
      $level = $_GET['level'];
      $trans_num = $_GET['comment'];
      $trans_type = $_GET['trans'];
-     $username = $_SESSION['username'];
+    $username = $_SESSION['username'];
 
      $pointLocation = new pointLocation();
-      $user_arr = mysqli_query($conn, "SELECT * from Users where uname = '$username'");
-    $row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
+     $user_arr = mysqli_query($conn, "SELECT * from Users where uname = '$username'");
+     $row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
 	
-    $id = $row['id'];
+    //$id = $row['id'];
 
     $points = array("$lat $lon");
     $bishkek;
@@ -162,7 +162,7 @@ else if (isset($_POST['submit']))
         echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
         exit;
     }
-    $id = $_SESSION['id'];
+    $id = 4;//$_SESSION['id'];
     $user_arr = mysqli_query($conn, "SELECT * from Users where id = '$id'");
     $row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
     $username = $row['uname'];

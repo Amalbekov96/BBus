@@ -5,23 +5,29 @@ date_default_timezone_set('Asia/Almaty');
 header("Content-Type: text/html; Charset=UTF-8");
 $ip = $_SERVER['REMOTE_ADDR'];
 
-   
+$id = $_SESSION['id'];
+$username = $_SESSION['username'];
 
-if (!empty($_GET)) {
+
+
     
+if (!empty($_GET)) {
+
     if (!$conn) {
         echo "Error: Unable to connect to MySQL." . PHP_EOL;
         echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
         echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
         exit;
     }
-    $id = $_SESSION['id'];
+//    $id = $_SESSION['id'];
 	$lat = number_format((float)$_GET['lat'], 8, '.', '');// need to sanitize any USER INPUT
 	$lng = number_format((float)$_GET['lng'], 8, '.', ''); // need to sanitize any USER INPUT
 
-	$trans_num = $_GET['comment'];
+	//$id = $_GET['id'];
+    
+    echo $lat;
 
-	$sql = "UPDATE Markers SET lat = $lat, lng = $lng WHERE trans_num = $trans_num";
+	$sql = "UPDATE Markers SET lat = $lat, lng = $lng WHERE user_id = $id";
 
 		mysqli_query($conn, "UPDATE Users set last_submission = now() where id = '$id'");
 
@@ -32,6 +38,5 @@ if (!empty($_GET)) {
 		http_response_code(200);
 		logError(mysqli_error($conn));
 	}
-
 }
 ?>

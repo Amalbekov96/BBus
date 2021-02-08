@@ -4,6 +4,7 @@ require_once ("config.php");
 date_default_timezone_set('Asia/Almaty');
 header("Content-Type: text/html; Charset=UTF-8");
 $ip = $_SERVER['REMOTE_ADDR'];
+    
 
 if (!empty($_GET)) {
     
