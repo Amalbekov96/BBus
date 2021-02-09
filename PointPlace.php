@@ -20,121 +20,130 @@ if (!empty($_GET)) {
         echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
         exit;
     }
+    
+    
+    
      $id = $_SESSION['id'];
      $lat = number_format((float)$_GET['lat'], 8, '.', '');// need to sanitize any USER INPUT
      $lon = number_format((float)$_GET['lng'], 8, '.', ''); // need to sanitize any USER INPUT
 
+   
+    
      $level = $_GET['level'];
      $trans_num = $_GET['comment'];
      $trans_type = $_GET['trans'];
     $username = $_SESSION['username'];
+    
+    $user_check = mysqli_query($conn, "SELECT * from Markers where user_id = '$id'");
 
-     $pointLocation = new pointLocation();
-     $user_arr = mysqli_query($conn, "SELECT * from Users where uname = '$username'");
-     $row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
-	
-    //$id = $row['id'];
+    if(mysqli_num_rows($user_check) == 0){
+        
+         $pointLocation = new pointLocation();
+         $user_arr = mysqli_query($conn, "SELECT * from Users where uname = '$username'");
+         $row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
+        
+        //$id = $row['id'];
 
-    $points = array("$lat $lon");
-    $bishkek;
-    $inBish = "inside";
-    foreach($points as $key => $point) {
-        $inBish = $pointLocation->pointInPolygon($point, $bishkek);
-    }
-    if($inBish == "outside") {
-        $message = "Your point placed does not belong to Bishkek";
-        http_response_code(201);
-
-    logError("$username ($id) tried to submit a point outside of Bishkek: $lat $lon");
-        $link = "index.php";
-        $message2 = "Try again";
-        htmlGetBack($message, $link, $message2);
-    }
-    else {
-        $sverdlov; $oktyabr; $lenin; $pervomay;
+        $points = array("$lat $lon");
+        $bishkek;
+        $inBish = "inside";
         foreach($points as $key => $point) {
-        $region = $pointLocation->pointInPolygon($point, $sverdlov);
+            $inBish = $pointLocation->pointInPolygon($point, $bishkek);
         }
-        if($region == "inside") {
-            $region = "sverdlov";
+        if($inBish == "outside") {
+            $message = "Your point placed does not belong to Bishkek";
+            http_response_code(201);
+
+        logError("$username ($id) tried to submit a point outside of Bishkek: $lat $lon");
+            $link = "index.php";
+            $message2 = "Try again";
+            htmlGetBack($message, $link, $message2);
         }
         else {
+            $sverdlov; $oktyabr; $lenin; $pervomay;
             foreach($points as $key => $point) {
-            $region = $pointLocation->pointInPolygon($point, $lenin);
-        }
-            if ($region == "inside") {
-                $region = "lenin";
+            $region = $pointLocation->pointInPolygon($point, $sverdlov);
+            }
+            if($region == "inside") {
+                $region = "sverdlov";
             }
             else {
                 foreach($points as $key => $point) {
-                $region = $pointLocation->pointInPolygon($point, $oktyabr);
+                $region = $pointLocation->pointInPolygon($point, $lenin);
             }
                 if ($region == "inside") {
-                $region = "oktyabr";
+                    $region = "lenin";
                 }
                 else {
                     foreach($points as $key => $point) {
-                    $region = $pointLocation->pointInPolygon($point, $pervomay);
-                    }
+                    $region = $pointLocation->pointInPolygon($point, $oktyabr);
+                }
                     if ($region == "inside") {
-                    $region = "pervomay";
+                    $region = "oktyabr";
                     }
                     else {
-                        $region = "undefined";
-                        $today;
-                        logError("Point belongs to bishkek, but not to any region: $lat $lon");
+                        foreach($points as $key => $point) {
+                        $region = $pointLocation->pointInPolygon($point, $pervomay);
+                        }
+                        if ($region == "inside") {
+                        $region = "pervomay";
+                        }
+                        else {
+                            $region = "undefined";
+                            $today;
+                            logError("Point belongs to bishkek, but not to any region: $lat $lon");
+                        }
                     }
                 }
             }
-        }
 
-        $last = DateTime::createFromFormat ( "Y-m-d H:i:s", $row["lastSubmission"]);
-        $available = date_add($last, date_interval_create_from_date_string('30 minutes'));
-        $now = new Datetime();
+            $last = DateTime::createFromFormat ( "Y-m-d H:i:s", $row["lastSubmission"]);
+            $available = date_add($last, date_interval_create_from_date_string('30 minutes'));
+            $now = new Datetime();
 
-        if ($available > $now) {
-        $link = 'index.php';
-        $message = "Go back";
-        print("You cannot submit now, your next submission is available on ");
-        http_response_code(202);
-        exit;
-        echo date_format($available, 'Y-m-d H:i:s');
-        logError("$username($id) tried to submit before his allowance");
-        htmlGetBack("", $link, $message);
-        }
-        else {
-
-           
-
-           $sql = "INSERT INTO Markers (lat, lng, level, user_id , region, name, trans_num, trans_type) VALUES ('$lat', '$lon','$level' , '$id','$region', '$username', '$trans_num', '$trans_type')";
-
-            mysqli_query($conn, "UPDATE Users set last_submission = now() where id = '$id'");
-           
-            if (mysqli_query($conn, $sql)) {
-
-            http_response_code(205);
-
-            echo "Latitude " . $lat . ", Longitude " . $lon . " , level of pollution " . $level . " and comment about trash " . $trans_num . " were successfully saved";
-            echo '<h4><a href="index.php"> Return back </a></h4>';
-
-            } 
-            else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-            logError(mysqli_error($conn));
+            if ($available > $now) {
+            $link = 'index.php';
+            $message = "Go back";
+            print("You cannot submit now, your next submission is available on ");
+            http_response_code(202);
+            exit;
+            echo date_format($available, 'Y-m-d H:i:s');
+            logError("$username($id) tried to submit before his allowance");
+            htmlGetBack("", $link, $message);
             }
-        
-        }
+            else {
+
+               
+
+               $sql = "INSERT INTO Markers (lat, lng, level, user_id , region, name, trans_num, trans_type) VALUES ('$lat', '$lon','$level' , '$id','$region', '$username', '$trans_num', '$trans_type')";
+
+                mysqli_query($conn, "UPDATE Users set last_submission = now() where id = '$id'");
+               
+                if (mysqli_query($conn, $sql)) {
+
+                http_response_code(205);
+
+                echo "Latitude " . $lat . ", Longitude " . $lon . " , level of pollution " . $level . " and comment about trash " . $trans_num . " were successfully saved";
+                echo '<h4><a href="index.php"> Return back </a></h4>';
+
+                }
+                else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+                logError(mysqli_error($conn));
+                }
+            
+            }
 
 
-        function filterInput($input)
-        {
-            $text = strip_tags($text);
-            $text = trim($text);
-            $text = htmlspecialchars($text);
-            return $text;
+            function filterInput($input)
+            {
+                $text = strip_tags($text);
+                $text = trim($text);
+                $text = htmlspecialchars($text);
+                return $text;
+            }
         }
     }
-
 }
 else if (isset($_POST['submit']))
 {

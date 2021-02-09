@@ -115,10 +115,7 @@ print ("<html>
          });
 //       alert('tema');
        
-       if(userIsOnline == false){
             createButton();
-       }
-
                update();
         
            
@@ -359,6 +356,7 @@ print ("<html>
 //       alert('setting markers');
          for (let i = 0; i < markers.length; i++) {
            markers[i].setMap(map);
+       //alert(markers[i].getPosition().lat() + '   ' + markers[i].getPosition().lng()  );
          }
        }
        
@@ -397,6 +395,8 @@ print ("<html>
           var lat;
           var lng;
       
+        DeleteAllMarkers();
+       
           for (var i=0; i < position.length; i++) {
               lat = position[i].lat;
               lng = position[i].lng;
@@ -408,17 +408,18 @@ print ("<html>
                  map: map,
                icon: './images/icons/bus.png'
              });
-      
-            DeleteAllMarkers();
-            markers.push(marker);
-            showMarkers();
-
 //            createButton();
+       
+            markers.push(marker);
                
              // markers[positions[i].registration].setPosition(position);
       
           };
-      
+       
+            
+            
+            showMarkers();
+
       
           if (positions.length > 1) {
               //map.fitZoom();
@@ -434,7 +435,7 @@ print ("<html>
               
               options = {
                 enableHighAccuracy: false,
-                timeout: 10000,
+                timeout: 90000,
                 maximumAge: 0
               };
 
