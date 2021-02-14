@@ -88,6 +88,21 @@ print ("<html>
         padding: 0;
       }
        
+       .button {
+         background-color: #4CAF50;
+         border: none;
+         color: white;
+         padding: 20px;
+         text-align: center;
+         text-decoration: none;
+         display: inline-block;
+         font-size: 16px;
+         margin: 4px 2px;
+       }
+
+       .button {border-radius: 50%;}
+       
+       
        
     </style>
     </head>
@@ -117,19 +132,8 @@ print ("<html>
        
             createButton();
                update();
-        
            
-            
-//       initListeners();
-       }
-       
-       
-       
-      //----------------------------------------
-    
-//       var refreshIntervalId = setInterval('requestPoints()', 4000);
-//       alert();
-       
+        }
 
 //--------------------------------------------------------------------
        
@@ -146,23 +150,27 @@ print ("<html>
        
 //---------------------------------------------------------------------
        
-       
       function createButton(){
 
           initWindows();
-          
           
           var locationButton = document.createElement('button');
           locationButton.textContent = 'show mini-bus';
           locationButton.classList.add('custom-map-control-button');
        
-          map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(
+           var DeleteButton = document.createElement('button');
+           DeleteButton.textContent = 'take me off map';
+           DeleteButton.classList.add('custom-map-control-button');
+       
+          map.controls[google.maps.ControlPosition.TOP_CENTER].push(
             locationButton
           );
        
+           map.controls[google.maps.ControlPosition.TOP_CENTER].push(
+                DeleteButton
+           );
+       
       locationButton.addEventListener('click', () => {
-                                      
-//         if(userIsOnline == false){
                                       
              if (navigator.geolocation) {
                navigator.geolocation.getCurrentPosition(
@@ -171,12 +179,6 @@ print ("<html>
                      lat: position.coords.latitude,
                      lng: position.coords.longitude,
                    };
-
-    //                  new google.maps.Marker({
-    //                   position: pos,
-    //                   map,
-    //                   title: 'Hello World!',
-    //                 });
 
                    messagewindow.setPosition(pos);
 
@@ -194,12 +196,66 @@ print ("<html>
                // Browser doesn't support Geolocation
                handleLocationError(false, infowindow, map.getCenter());
              }
-//            } else {
-//                  alert('you are already online');
-//            }
-                                      
        });
        
+       
+       
+       DeleteButton.addEventListener('click', () => {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                      const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+
+                  messagewindow.setPosition(pos);
+                  map.setCenter(pos);
+                    },
+                    () => {
+                      handleLocationError(true, infowindow, map.getCenter());
+                    }
+                  );
+                } else {
+                  // Browser doesn't support Geolocation
+                  handleLocationError(false, infowindow, map.getCenter());
+                }
+                                     
+                var url = 'https://web-class.auca.kg/~kushtar/BBus/DeletePoint.php?action=0';
+                                     
+                 var xhttp = new XMLHttpRequest();
+                                     
+                 xhttp.onreadystatechange = function() {
+                   if (xhttp.readyState == 4) {
+                     if (xhttp.status == 200) {
+                                     
+                     messagewindow.setContent('Successfully deleted');
+                     messagewindow.open(map);
+                     setTimeout(function(){messagewindow.close()}, 2500);
+                     
+                     userIsOnline = new Boolean(true);
+                     } else if (xhttp.status == 201) {
+                         messagewindow.setContent('Your point placed does not belong to Bishkek');
+                         messagewindow.open(map);
+                         setTimeout(function(){ window.location.reload(1);}, 2500);
+                     }
+                     if (xhttp.status == 202) {
+                         messagewindow.setContent('You cannot submit now, you are on cooldown, check your office');
+                         messagewindow.open(map);
+                         setTimeout(function(){ window.location.reload(1);}, 2500);
+                     }
+                   }
+
+                 };
+
+                
+                xhttp.open('GET', url, true);
+                 xhttp.send();
+                 
+                 infowindow.close();
+                 
+                                     
+          });
       }
        
        
@@ -281,15 +337,6 @@ print ("<html>
 //---------------------------------------------------------------------
        
              function initListeners(){
-//                 google.maps.event.addListener(map, 'click', function(event) {
-//
-//                    placeMarker(event.latLng);
-//
-//                    google.maps.event.addListener(marker, 'click', function() {
-//                       infowindow.open(map, marker);
-//                   });
-//               });
-       
        
                var markers = markersInfo.map(function(location, i) {
                   var lab = location.level.toString();
@@ -353,10 +400,8 @@ print ("<html>
 
        
        function setMapOnAll(map) {
-//       alert('setting markers');
          for (let i = 0; i < markers.length; i++) {
            markers[i].setMap(map);
-       //alert(markers[i].getPosition().lat() + '   ' + markers[i].getPosition().lng()  );
          }
        }
        
@@ -434,8 +479,8 @@ print ("<html>
        function update(){
               
               options = {
-                enableHighAccuracy: false,
-                timeout: 90000,
+                enableHighAccuracy: true,
+                timeout: 3000,
                 maximumAge: 0
               };
 
