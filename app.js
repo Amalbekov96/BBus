@@ -1,3 +1,5 @@
+
+
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('../BBus/sw.js')
     .then(reg => console.log('service worker registered', reg))

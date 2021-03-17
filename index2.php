@@ -17,8 +17,6 @@ $conn;
 
 $userid = $_SESSION['id'];
     
-     
-    
 $sesusername;
 
 if(isset($_SESSION['username'])){

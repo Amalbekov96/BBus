@@ -155,7 +155,8 @@ print('<!DOCTYPE html>
     </div>
 
     
-    
+    <script src='https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBlLms-yD7lNgRk3z4LIpv79WvNTP2aY1I&callback=initMap' async defer >
+    </script>
 
     
     <script>
@@ -170,6 +171,7 @@ print('<!DOCTYPE html>
     var userIsOnline = new Boolean(null);
     var loged = 0;
     var update_id;
+    var user_info = $row_encoded;
     
 function initMap() {
     statewindow = new google.maps.InfoWindow({
@@ -221,7 +223,8 @@ function initWindows(){
      var Pass_formStr = `" . PASSENGER_INPUT . "`;
      var Driv_formStr = `" . DRIVER_INPUT . "`;
      var messageStr = `" . MESSAGE_LOCATION_SAVED . "`;
-     var user_info = $row_encoded;
+      
+
       
       if( user_info[0].user_type == 'Driver'){
           infowindow = new google.maps.InfoWindow({
@@ -237,10 +240,6 @@ function initWindows(){
      messagewindow = new google.maps.InfoWindow({
        content: document.getElementById('message')
      });
-       
-//    statewindow = new google.maps.InfoWindow({
-//      content: document.getElementById('message')
-//    });
 }
 
 
@@ -254,7 +253,7 @@ function AddPoint(){
     
   options = {
     enableHighAccuracy: false,
-    timeout: 2000,
+    timeout: 5000,
     maximumAge: 20000
   };
       
@@ -295,7 +294,7 @@ function DelPoint(){
     initWindows();
       const options = {
         enableHighAccuracy: false,
-        timeout: 2000,
+        timeout: 5000,
         maximumAge: 20000
       };
           
@@ -431,14 +430,6 @@ function DelPoint(){
       };
       
       
-      alert(line_number
-              +' '+ latlng.lat()
-              +' '+latlng.lng()
-              +' '+trans_type
-              +' '+direct
-            +' '+ user_info[0].user_type
-            + ' '+ level);
-      
       $.ajax({
               type: 'POST',
               url: 'https://web-class.auca.kg/~kushtar/BBus/PointPlace.php',
@@ -446,8 +437,7 @@ function DelPoint(){
               dataType: 'text',
               cache: false,
               success: function (result, status) {
-             alert(result);
-             alert(status);
+            
                  if(result == 200){
                      messagewindow.setContent('Successfully saved');
                     messagewindow.open(map);
@@ -513,6 +503,10 @@ function DelPoint(){
       }
 
 //-----------------------------------
+      
+      var curUserLat;
+      var curUserLng;
+      
       function updatePoints(position) {
           var lat;
           var lng;
@@ -526,16 +520,55 @@ function DelPoint(){
       
               latlng = new google.maps.LatLng(lat, lng);
       
+              var icon_path;
+              if(position[i].trans_type == 'Troleibus') {
+              
+                  icon_path = './images/icons/marker_icons/Troleybus_';
+                  if(position[i].level == 0){
+                    icon_path += '1';
+                  } else if(position[i].level == 1){
+                    icon_path += '2';
+                  } else {
+                    icon_path += '3';
+                  }
+              } else if(position[i].trans_type == 'Mini-bus') {
+                  icon_path = './images/icons/marker_icons/Mini-bus_';
+                  if(position[i].level == 0){
+                    icon_path += '1';
+                  } else if(position[i].level == 1){
+                    icon_path += '2';
+                  } else {
+                    icon_path += '3';
+                  }
+              
+              } else {
+                 icon_path = './images/icons/marker_icons/Bus_';
+                 if(position[i].level == 0){
+                   icon_path += '1';
+                 } else if(position[i].level == 1){
+                   icon_path += '2';
+                 } else {
+                   icon_path += '3';
+                 }
+              
+              }
+      
+           var icon = {
+                url: icon_path,
+                scaledSize: new google.maps.Size(50, 50)
+            };
+      
              var marker = new google.maps.Marker({
                  position: latlng,
-                 icon: './images/icons/bus.png',
-                 label: { color: '#00aaff', fontWeight: 'bold', fontSize: '14px', text: position[i].trans_num.toString() },
-                 title: position[i].user_id.toString(),
+                 icon: icon,
+                 label: { color: '#000000', fontWeight: 'bold', fontSize: '12px', text: position[i].trans_num.toString()},
+                 title: icon_path,
              });
 
             markers.push(marker);
            };
       
+            
           markers = markers.map(function(location, i) {
                                 
             location.addListener('click', function(){
@@ -545,28 +578,72 @@ function DelPoint(){
                if (statewindow) {
                   statewindow.close();
                  }
-                 
+                                 
                 if (position[i].name == '$sesusername') {
+
+                     statewindow= new google.maps.InfoWindow({
+                         content:
+                        '<div style= width:15%; height:14%>' +
+                            '<div style= float:center class = display: inline-block;>' +
+                                    '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
+                                    '<br>Type :' + position[i].trans_type +
+                                    '<br>Number :' + position[i].trans_num.toString() +
+                                    '<br>Direction :' + position[i].direct +
+                                    '<br>Level :' + position[i].level.toString() +
+                            '</div>' +
+                        '</div>'
+                    });
+                                 
+                } else if (user_info.length === 0) {
+    
                     statewindow= new google.maps.InfoWindow({
                          content:
-                        '<br>Transport type: ' + position[i].trans_type +
-                        '<br>Number :' + position[i].trans_num.toString() + '</h3>' +
-                        '<br>Direction :' + position[i].direct + '</h3>' +
-                        '<br>Level of Pollution: ' + position[i].level.toString()  +
-                        '<button onclick = deletePoint()> Delete your point </button>'
-                    });
-                } else {
-
-                    statewindow= new google.maps.InfoWindow({
-                         content:
-                       '<br>Transport type: ' + position[i].trans_type +
-                       '<br>Number :' + position[i].trans_num.toString() + '</h3>' +
-                       '<br>Direction :' + position[i].direct + '</h3>' +
-                       '<br>Level of Pollution: ' + position[i].level.toString()
-                       + '<button onclick = reportPoint()> Report fake bus </button>'
-                    });
-                }
-
+                            '<div style= width:15%; height:14%>' +
+                               '<div style= float:center class = display: inline-block;>' +
+                                       '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
+                                       '<br>Type :' + position[i].trans_type +
+                                       '<br>Number :' + position[i].trans_num.toString() +
+                                       '<br>Direction :' + position[i].direct +
+                                       '<br>Level :' + position[i].level.toString() +
+                               '</div>' +
+                           '</div>'
+                        });
+                                 
+                 } else {
+                    var userPos = new google.maps.LatLng(curUserLat, curUserLng);
+                    var marPos = new google.maps.LatLng(position[i].lat, position[i].lng);
+                    var distance = google.maps.geometry.spherical.computeDistanceBetween(userPos, marPos);
+                                 
+                      if(distance < 50){
+                          statewindow= new google.maps.InfoWindow({
+                               content:
+                            '<div style= width:15%; height:14%>' +
+                                 '<div style= float:center class = display: inline-block;>' +
+                                         '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
+                                         '<br>Type :' + position[i].trans_type +
+                                         '<br>Number :' + position[i].trans_num.toString() +
+                                         '<br>Direction :' + position[i].direct +
+                                         '<br>Level :' + position[i].level.toString() +
+                                         '<button onclick = reportPoint()> Fake </button>' +
+                                 '</div>' +
+                             '</div>'
+                          });
+                     } else {
+                         statewindow= new google.maps.InfoWindow({
+                              content:
+                                '<div style= width:15%; height:14%>' +
+                                    '<div style= float:center class = display: inline-block;>' +
+                                            '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
+                                            '<br>Type :' + position[i].trans_type +
+                                            '<br>Number :' + position[i].trans_num.toString() +
+                                            '<br>Direction :' + position[i].direct +
+                                            '<br>Level :' + position[i].level.toString() +
+                                    '</div>' +
+                                '</div>'
+                             });
+                     }
+                 }
+                                 
                 statewindow.open(map, location);
                                  
                 setTimeout(update, 5000);
@@ -589,7 +666,36 @@ function DelPoint(){
                                
                                    
 //---------------------------------------------------------------------
+      
+      function IsUserClose()
+      {
 
+          
+          const options = {
+              enableHighAccuracy: true,
+              timeout: 5000,
+              maximumAge: 20000
+            };
+
+          navigator.geolocation.getCurrentPosition(
+            getLoc
+            ,
+            () => {
+              handleLocationError(true, infowindow, map.getCenter());
+            },
+            () => {
+               options();
+            }
+          );
+      
+      }
+//--------------------------------------------------------------
+      
+      function getLoc(position){
+          curUserLat = position.coords.latitude;
+          curUserLng = position.coords.longitude;
+      }
+      
 //----------------------------------------------------------------
        
 function update(){
@@ -623,7 +729,9 @@ function ShowPosition(position) {
 
      lat = position.coords.latitude;
      lng = position.coords.longitude;
-
+     
+      curUserLat = position.coords.latitude;
+      curUserLng = position.coords.longitude;
 
      var url = 'https://web-class.auca.kg/~kushtar/BBus/UpdatePoint.php?lat=' + lat + '&lng=' + lng;
                                      
@@ -678,10 +786,6 @@ function ShowPosition(position) {
 
       }
 
-    </script>
-
-    <script async defer
-    src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBlLms-yD7lNgRk3z4LIpv79WvNTP2aY1I&callback=initMap'>
     </script>
     
 </body>
