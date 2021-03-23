@@ -1,4 +1,38 @@
-<?php 
+<?php
+    
+    define("DRIVER_INPUT", "
+               <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+
+               <style>
+               
+               input[type=button], input[type=button], input[type=reset] {
+                 background-color: #4CAF50;
+                 border: none;
+                 color: white;
+                 padding: 16px 32px;
+                 text-decoration: none;
+                 margin: 4px 2px;
+                 cursor: pointer;
+               }
+
+
+               </style>
+
+               <div id=form action='' method='POST'>
+                <table>
+
+              Were is it going? <br>
+              <input type='radio' name='Drivedir' value='city'> To City &nbsp; &nbsp;
+              <input type='radio' name='Drivedir' value='contryside'> To Countryside &nbsp; &nbsp;
+              <br>
+           
+              <tr><td><input type='button' style='margin-top:5px' class='btn btn-primary' value='Save' onclick='saveData()'></td></tr>
+
+             </table>
+           </div>");
+           
+           
+           
 
 define("PASSENGER_INPUT", "
         <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
@@ -43,13 +77,12 @@ define("PASSENGER_INPUT", "
        Were is it going? <br>
        <input type='radio' name='Passdir' value='city'> To City &nbsp; &nbsp;
        <input type='radio' name='Passdir' value='contryside'> To Countryside &nbsp; &nbsp;
-
        <br>
        
         <br>
         How full is it? <br>
-        <input type='radio' name='lev' value='1'> 20% &nbsp; &nbsp;
-        <input type='radio' name='lev' value='2'> 60% &nbsp; &nbsp;
+        <input type='radio' name='lev' value='0'> 20% &nbsp; &nbsp;
+        <input type='radio' name='lev' value='1'> 60% &nbsp; &nbsp;
         <input type='radio' name='lev' value='3'> 100% &nbsp; &nbsp;
         <br>
 

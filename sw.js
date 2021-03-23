@@ -3,21 +3,17 @@ const staticCacheName = 'site-static-v1';
 
 const assets = [
     './login.php',
-    './index2.php',
-    './pages/userPage.php',
+    './userPage.php',
+    './userRegist.php',
+    './driverRegist.php',
     './pages/AboutUs.html',
-    './pages/fallback.html',
-    './images/icons/bus.png',
+//    './pages/fallback.html',
+    './images/icons/marker_icons',
     
-    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
+//    'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css',
     'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
     'https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js',
     'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js',
-    'https://web-class.auca.kg/~kushtar/BBus/css/style.css',
-    'https://web-class.auca.kg/~kushtar/BBus/images/in_bus.jpg',
-    'https://web-class.auca.kg/~kushtar/BBus/images/map.jpg',
-    'https://web-class.auca.kg/~kushtar/BBus/images/waiting.jpg',
-    'https://maps.googleapis.com/maps/api/js?key=AIzaSyBlLms-yD7lNgRk3z4LIpv79WvNTP2aY1I&callback=initMap',
 ];
 
 
