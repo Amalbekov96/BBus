@@ -25,12 +25,11 @@ if (!empty($_GET)) {
 
 	//$id = $_GET['id'];
     
-    echo $lat;
 
-	$sql = "UPDATE Markers SET lat = $lat, lng = $lng WHERE user_id = $id";
+	$sql = "UPDATE Markers SET lat = $lat, lng = $lng, add_time = now() WHERE user_id = $id";
 
-		mysqli_query($conn, "UPDATE Users set last_submission = now() where id = '$id'");
-
+    mysqli_query($conn, "UPDATE Users set last_submission = now() where id = '$id'");
+    
 	if (mysqli_query($conn, $sql)) {
 
 		http_response_code(205);

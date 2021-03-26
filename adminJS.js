@@ -1,169 +1,73 @@
-<?php
-session_start();
-header('Content-Type: text/html; charset=utf-8');
-    
-require_once ('./config.php');
-    
-//$logout;
-//
-//if(isset($_GET['logout']) == 1) {
-//  unset($_SESSION['username']);
-//  unset($_SESSION['id']);
-//  session_destroy();
-//}
-
-$conn;
-
-$userid = $_SESSION['id'];
-    
-$sesusername;
-
-if(isset($_SESSION['username'])){
-    $sesusername = $_SESSION['username'];
-    $loged = array("is_loged"=>1);
-    $loged_encoded = json_encode($loged);
-}
-    
-    
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
- 
- $result = mysqli_query($conn,"SELECT * FROM Users WHERE uname = '$sesusername'");
-
-    $json = [];
-    while($row = mysqli_fetch_assoc($result)){
-      $json[] = $row;
-    }
-
-    $row_encoded = json_encode($json);
-
-//if (!empty($_SESSION)) {
-
-    
-    
-print('<!DOCTYPE html>
-<html>
-<head>
-    <link rel="apple-touch-icon" href="../BBus/images/icons/App_Icon_192.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>B Mini-Bus</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link href="../BBus/manifest.json" rel="manifest">
-      <script src="../BBus/sw.js"></script>
-      <script src="../BBus/app.js"></script>
-      <meta name = "theme-color" content="#FFE1C4">
-      
-</head>
-<body>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-      
-  <button id = "addButton" type="button" class="btn btn-success btn-circle btn-xl" > Add Point </button>
-  <button id = "delButton" type="button" class="btn btn-success btn-circle btn-xl"> Del Point </button>
-      
-  <a class="navbar-brand" href="#">BOT</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mx-auto">
-      
-      <li class="nav-item">
-             <a class="nav-link" href="./userRegist.php">Register as Passenger</a>
-      </li>
-      
-      <li class="nav-item ">
-        <a class="nav-link" href="./driverRegist.php">Register as Driver</a>
-      </li>
-      
-      <li class="nav-item">
-        <a class="nav-link" href="./pages/AboutUs.html">About</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./login.php">Login</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="./login.php">Logout</a>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-  <div class="input-group fixed-bottom">
-    <input type="search" id="search_num" placeholder="Search" maxlength="3" class="form-control">
-    <span class="input-group-btn">
-     
-      <button class="btn btn-success" id="search_btn" type="button" onclick="searchFunc()">SEARCH</button>
-    </span>
-  </div>
-  
-</body>
-</html>');
-      
-// <button class="btn btn-default" type="button" onclick="inputClear()">X</button>
-      
-  $html = "<!DOCTYPE html>
-    <head>
-    <meta name='viewport' content='initial-scale=1.0, user-scalable=no' />
-    <meta http-equiv='content-type' content='text/html; charset=utf-8'/>
-        
-    
-    <style>
-    
-      #map {
-       transition: margin-left .5s;
-       padding: 1px;
-        height: 89%;
-       width: 100%;
-       position:absolute;
-      }
-    
-    
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-       
-       .button {
-         background-color: #4CAF50;
-         border: none;
-         color: white;
-         padding: 20px;
-         text-align: center;
-         text-decoration: none;
-         display: inline-block;
-         font-size: 16px;
-         margin: 4px 2px;
-       }
-
-       .button {border-radius: 50%;}
-      
-     
-      
-    
-    </style>
-    </head>
     
 
-    <div id='map' height='90%' width='100%' >
-    </div>
+var driv_input =
+                  "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />"+
+                  "  <style>"+
+                   " input[type=button], input[type=button], input[type=reset] {"+
+                   "   background-color: #4CAF50;"+
+                    "  border: none;"+
+                    "  color: white;"+
+                    "  padding: 16px 32px;"+
+                    "  text-decoration: none;"+
+                    "  margin: 4px 2px;"+
+                    "  cursor: pointer;"+
+                   " }"+
+                   " </style>"+
+                   " <div id=form action='' method='POST'>"+
+                   "  <table>"+
+                  " Were is it going? <br>"+
+                  " <input type='radio' name='Drivedir' value='city'> To City &nbsp; &nbsp;"+
+                  " <input type='radio' name='Drivedir' value='contryside'> To Countryside &nbsp; &nbsp;"+
+                  " <br> " +
+                  " <tr><td><input id='save' type='button' style='margin-top:5px' class='btn btn-primary' value='Save'" + "onclick='saveData()'></td></tr>"+
+                 " </table>"+
+                "</div>";
+
+    var pass_input =
+                '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> ' +
+                '    <style> ' +
+                '        input[type="button"], input[type="button"], input[type="reset"] { ' +
+                '          background-color: "#4CAF50"; ' +
+                '          border: "none"; ' +
+                '          color: "white"; ' +
+                '          padding: "16px 32px"; ' +
+                '          text-decoration: "none"; ' +
+                '          margin: "4px 2px"; ' +
+                '          cursor: "pointer"; ' +
+                '        } ' +
+                '    </style> ' +
+                '    <div id=form action="" method="POST"> ' +
+                '     <table> ' +
+                '    <tr> ' +
+                '    <label for="cars">Type of Transportation:</label> <br> ' +
+                '    <select name="trans_type" id="trans_type"> ' +
+                '      <option value="Troleibus">Troleibus</option> ' +
+                '      <option value="Bus">Bus</option> ' +
+                '      <option value="Mini-bus">Mini-bus</option> ' +
+                '    </select> ' +
+                '    <br> ' +
+                '    <tr> <td><br> ' +
+                '     Transportation number: <br><textarea id="trans_num"  style="resize:none" name="trans_num" rows="1" cols="10" maxlength="4"> </textarea> ' +
+                '     </td></tr> ' +
+                '    <td> ' +
+                '   <br> ' +
+                '   Were is it going? <br> ' +
+                '   <input type="radio" name="Passdir" value="city"> To City &nbsp; &nbsp; ' +
+                '   <input type="radio" name="Passdir" value="contryside"> To Countryside &nbsp; &nbsp; ' +
+                '   <br> ' +
+                '    <br> ' +
+                '    How full is it? <br> ' +
+                '    <input type="radio" name="lev" value="0"> 20% &nbsp; &nbsp; ' +
+                '    <input type="radio" name="lev" value="1"> 60% &nbsp; &nbsp; ' +
+                '    <input type="radio" name="lev" value="3"> 100% &nbsp; &nbsp; ' +
+                '    <br> ' +
+                '    </td></tr> ' +
+                '    <tr><td><input id="save" type="button" style="margin-top:5px" class="btn btn-primary" value="Save" ' + 'onclick=saveData()></td></tr> ' +
+                ' </table> ' +
+                ' </div>';
 
 
-      
 
-      <script src='https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBlLms-yD7lNgRk3z4LIpv79WvNTP2aY1I&callback=initMap' async defer >
-      </script>
-      
-    
-    <script>
-       
-       
     var map;
     var markers = [];
     var userID = null;
@@ -173,14 +77,18 @@ print('<!DOCTYPE html>
     var userIsOnline = new Boolean(null);
     var loged = 0;
     var update_id;
-    var user_info = $row_encoded;
-      var search_num = '';
+    var user_info;
+    var search_num = '';
+
+
     
       
 function initMap() {
+    
     statewindow = new google.maps.InfoWindow({
           content:'',
         });
+    
     var zoom = 12;
     map = new google.maps.Map(document.getElementById('map'), {
     zoom: 12,
@@ -214,15 +122,32 @@ function initMap() {
     //            gestureHandling: 'cooperative',
     });
     
+    
+    
+    
+    getUserInfo();
+    
     document.getElementById('delButton').addEventListener('click', DelPoint);
     document.getElementById('addButton').addEventListener('click', AddPoint);
-      
+
     setInputFilter(document.getElementById('search_num'), function(value) {
     return /^-?\d*$/.test(value); });
-      searchFunc();
+    
+    
     update();
-
+    //searchFunc();
 }
+
+//--------------------------------------------------------------------
+
+    function getUserInfo()
+    {
+        $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?user_info=1',
+        dataType: 'json',
+        success: function(response, status){
+               user_info = response;
+        }});
+    }
 
 //--------------------------------------------------------------------
       function searchFunc(){
@@ -252,8 +177,8 @@ function initMap() {
        
 function initWindows(){
       
-     var Pass_formStr = `" . PASSENGER_INPUT . "`;
-     var Driv_formStr = `" . DRIVER_INPUT . "`;
+     var Pass_formStr = pass_input;
+     var Driv_formStr = driv_input;
      var messageStr = `" . MESSAGE_LOCATION_SAVED . "`;
       
 
@@ -397,7 +322,7 @@ function DelPoint(){
        
  function saveData() {
       
-      var user_info = $row_encoded;
+//      var user_info = user_info;
       var latlng;
       var trans_type;
       var direct;
@@ -405,6 +330,7 @@ function DelPoint(){
       var line_number;
       var level;
             
+     
       if(user_info[0].user_type == 'Driver'){
 
             line_number = user_info[0].line_number;
@@ -868,6 +794,7 @@ function DelPoint(){
        
 function update(){
       
+    
   setTimeout(doNothing, 7000);
       
   options = {
@@ -957,13 +884,3 @@ function ShowPosition(position) {
       function doNothing () {
 
       }
-
-    </script>
-      
-
-    
-</body>
-</html>";
-  echo $html;
-
-?>

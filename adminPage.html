@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+    <head>
+        
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <meta http-equiv="content-type" content="text/html;" charset="utf-8"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <link rel="apple-touch-icon" href="../BBus/images/icons/App_Icon_192.png">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>BOT</title>
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <link href="../BBus/manifest.json" rel="manifest">
+        <script src="../BBus/sw.js"></script>
+        <script src="../BBus/app.js"></script>
+        <meta name = "theme-color" content="#FFE1C4">
+            
+        <?php
+            session_start();
+            header("Content-Type: text/html; charset=utf-8");
+            require_once ("./config.php");
+        ?>
+        
+
+        <script async defer  src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBlLms-yD7lNgRk3z4LIpv79WvNTP2aY1I&callback=initMap" >
+        </script>
+        
+        <link rel="stylesheet" href="./adminStyle.css">
+        <script src="./adminJS.js"></script>
+        
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+              
+          <button id = "addButton" type="button" class="btn btn-success btn-circle btn-xl" > Add Point </button>
+          <button id = "delButton" type="button" class="btn btn-success btn-circle btn-xl"> Del Point </button>
+              
+          <a class="navbar-brand align-self-center" href="#">BOT</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+              
+              <li class="nav-item">
+                     <a class="nav-link" href="./userRegist.php">Register as Passenger</a>
+              </li>
+              
+              <li class="nav-item ">
+                <a class="nav-link" href="./driverRegist.php">Register as Driver</a>
+              </li>
+              
+              <li class="nav-item">
+                <a class="nav-link" href="./pages/AboutUs.html">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./login.php">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="./login.php">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        
+        <div id="map" height="90%" width="100%" ></div>
+ 
+          <div class="input-group fixed-bottom">
+            <input type="search" id="search_num" placeholder="Search" maxlength="3" class="form-control">
+            <span class="input-group-btn">
+             
+              <button class="btn btn-default" id="search_btn" type="button" onclick="searchFunc()">SEARCH</button>
+            </span>
+          </div>
+    
+</body>
+</html>

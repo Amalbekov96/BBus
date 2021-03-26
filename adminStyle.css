@@ -1,0 +1,31 @@
+
+  #map {
+   transition: margin-left .5s;
+   padding: 1px;
+    height: 89%;
+   width: 100%;
+   position:absolute;
+  }
+
+
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+   
+   .button {
+     background-color: #4CAF50;
+     border: none;
+     color: white;
+     padding: 20px;
+     text-align: center;
+     text-decoration: none;
+     display: inline-block;
+     font-size: 16px;
+     margin: 4px 2px;
+   }
+
+   .button {border-radius: 50%;}
+  
+ 

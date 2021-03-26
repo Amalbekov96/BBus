@@ -33,19 +33,62 @@ if (!empty($_GET)) {
          
          http_response_code(205);
         
-    } else {
+    } else if(isset($_GET['line_number'])){
         
-        $result = mysqli_query($conn,"SELECT * FROM Markers");
-       $json = [];
-      
-       while($row = mysqli_fetch_assoc($result)){
-        $json[] = $row;
-       }
+        $line_number = $_GET['line_number'];
+        
+        $result = mysqli_query($conn,"SELECT * FROM Markers WHERE trans_num = $line_number OR point_type = 'Passenger'");
+         $json = [];
+        
+         while($row = mysqli_fetch_assoc($result)){
+          $json[] = $row;
+         }
 
-      $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
+         $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
 
-       echo($json_encoded);
+         echo($json_encoded);
 
+    } else if(isset($_GET['search_num'])) {
+        
+        $search_num = $_GET['search_num'];
+        
+        $result = mysqli_query($conn,"SELECT * FROM Markers WHERE trans_num = $search_num");
+         $json = [];
+        
+         while($row = mysqli_fetch_assoc($result)){
+          $json[] = $row;
+         }
+
+         $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
+
+         echo($json_encoded);
+
+    } else if(isset($_GET['user_info'])) {
+        
+        $user_info = $_SESSION['id'];
+        
+        $result = mysqli_query($conn,"SELECT * FROM Users WHERE id = $user_info");
+         $json = [];
+        
+         while($row = mysqli_fetch_assoc($result)){
+          $json[] = $row;
+         }
+
+         $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
+
+         echo($json_encoded);
+    
+    } else {
+         $result = mysqli_query($conn,"SELECT * FROM Markers");
+         $json = [];
+        
+         while($row = mysqli_fetch_assoc($result)){
+          $json[] = $row;
+         }
+
+         $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
+
+         echo($json_encoded);
     }
 
 
@@ -113,6 +156,15 @@ if (!empty($_GET)) {
                 
             } else {
                 mysqli_query($conn,"UPDATE Users SET user_report = $new_ureport WHERE id = $user_id");
+            }
+            
+        }
+    } else {
+        
+        if($_POST['type'] == 2){
+            if(mysqli_query($conn,"DELETE FROM Markers WHERE TIMESTAMPDIFF(MINUTE,add_time,NOW()) > 54"))
+            {
+                echo 'yes';
             }
             
         }

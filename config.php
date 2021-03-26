@@ -93,6 +93,8 @@ define("PASSENGER_INPUT", "
       </table>
     </div>");
        
+    $pass_input = file_get_contents('./pass_input.html');
+       
 define("DRIVER_INPUT", "
            <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
 
