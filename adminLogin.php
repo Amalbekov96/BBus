@@ -6,38 +6,38 @@
     unset($_SESSION['username']);
     unset($_SESSION['id']);
 
-   	if (isset($_POST['Submit'])) {
-		$conn;
-		$username = $_POST['username'];
-		$password = $_POST['password'];
+       if (isset($_POST['Submit'])) {
+        $conn;
+        $username = $_POST['username'];
+        $password = $_POST['password'];
 
 
-		$user_arr = mysqli_query($conn, "SELECT * from Users where uname = '$username' and pswd = '$password'");
+        $user_arr = mysqli_query($conn, "SELECT * from Admins where name = '$username' and password = '$password'");
 
-		$row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
+        $row=mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
 
-		if (strlen($username) == 0 or strlen($password) == 0) {
-		htmlGetBack("You have not authorized with username / password", "login.php", "Go Back");
-		logAction($conn, "empty", "empty");
-		exit;
-		}
-		else {
-
-  		if (strlen($row['id']) == 0) {
-  		htmlGetBack("Incorrect credentials", "login.php", "Go Back");
-  		logAction($conn, $username, "fail");
-  		exit;
-  		}
-  		else {	
-  		$_SESSION['username'] = $username;
-  		$_SESSION['id'] = $row['id'];
-  		logAction($conn, $username, "login");
-  		echo "<script>window.location = 'userPage.php';</script>";
-  		}
-  	}   		
+        if (strlen($username) == 0 or strlen($password) == 0) {
+        htmlGetBack("You have not authorized with username / password", "adminLogin.php", "Go Back");
+        logAction($conn, "empty", "empty");
+        exit;
+        }
+        else {
+          if (strlen($row['ID']) == 0) {
+          htmlGetBack("Incorrect credentials", "adminLogin.php", "Go Back");
+          logAction($conn, $username, "fail");
+          exit;
+          }
+          else {
+          $_SESSION['username'] = $username;
+          $_SESSION['id'] = $row['id'];
+          logAction($conn, $username, "login");
+          echo "<script>window.location = 'adminPage.html';</script>";
+          }
+      }
   }
-
-
+    
+    
+    
 $html = '
     <!DOCTYPE html>
      <html lang="en">
@@ -61,31 +61,28 @@ $html = '
           height 100%;
      }
 
-     .input-group {
-        width: 100%;
-        vertical-align:middle;
-     }
 
-
-     .input-group-addon {
-        width: 60px;
-     }
-
-     .vertical-center {
-         display:table-cell;
-         vertical-align:middle;
-     }
-
+    .col-centered {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .vertical-center{
+        margin: 0 auto;
+        width:80% /* value of your choice which suits your alignment */
+    }
+    
      </style>
      </head>
      <body>
      <center>
-     <div class="signup-form">
+     <div class="signup-form col-centered">
      <div class="vertical-center">
     
          <form action="" method="post">
              
-                 <h2>Login to your account</h2>
+                 <h2>Login as Admin</h2>
                  <hr>
                  <div class="form-group" >
                      <div class="input-group">
@@ -105,14 +102,6 @@ $html = '
                     <button type="submit" name="Submit" class="btn btn-success btn-lg">Login</button>
                     &emsp; &emsp;
     
-                    <a href="userPage.php"><button type="button" class="btn btn-success btn-lg">Guest</button></a>
-    
-                    
-                    <br>
-                    <br>
-                    <br>
-                    <a href="userRegist.php"><button type="button" class="btn btn-success btn-lg">Register as passenger</button></a> <br><br>
-                    <a href="driverRegist.php"><button type="button" class="btn btn-success btn-lg">Register as driver</button></a>
                  </div>
          </form>
     
@@ -126,16 +115,8 @@ $html = '
          <script type="text/javascript">
     
            document.getElementById("Go_back").onclick = function () {
-               location.href = "userPage.php";
+               location.href = "userPage.html";
            };
-     
-           document.getElementById("UserRegister").onclick = function () {
-               location.href = "userRegist.php";
-           };
-     
-             document.getElementById("DriverRegister").onclick = function () {
-                 location.href = "driverRegist.php";
-             };
      
 //           document.getElementById("Guest").onclick = function () {
 //           location.href = "userPage.php";

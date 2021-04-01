@@ -1,71 +1,70 @@
-    
-
-var driv_input =
-                  "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />"+
-                  "  <style>"+
-                   " input[type=button], input[type=button], input[type=reset] {"+
-                   "   background-color: #4CAF50;"+
-                    "  border: none;"+
-                    "  color: white;"+
-                    "  padding: 16px 32px;"+
-                    "  text-decoration: none;"+
-                    "  margin: 4px 2px;"+
-                    "  cursor: pointer;"+
-                   " }"+
-                   " </style>"+
-                   " <div id=form action='' method='POST'>"+
-                   "  <table>"+
-                  " Were is it going? <br>"+
-                  " <input type='radio' name='Drivedir' value='city'> To City &nbsp; &nbsp;"+
-                  " <input type='radio' name='Drivedir' value='contryside'> To Countryside &nbsp; &nbsp;"+
-                  " <br> " +
-                  " <tr><td><input id='save' type='button' style='margin-top:5px' class='btn btn-primary' value='Save'" + "onclick='saveData()'></td></tr>"+
-                 " </table>"+
-                "</div>";
-
-    var pass_input =
-                '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> ' +
-                '    <style> ' +
-                '        input[type="button"], input[type="button"], input[type="reset"] { ' +
-                '          background-color: "#4CAF50"; ' +
-                '          border: "none"; ' +
-                '          color: "white"; ' +
-                '          padding: "16px 32px"; ' +
-                '          text-decoration: "none"; ' +
-                '          margin: "4px 2px"; ' +
-                '          cursor: "pointer"; ' +
-                '        } ' +
-                '    </style> ' +
-                '    <div id=form action="" method="POST"> ' +
-                '     <table> ' +
-                '    <tr> ' +
-                '    <label for="cars">Type of Transportation:</label> <br> ' +
-                '    <select name="trans_type" id="trans_type"> ' +
-                '      <option value="Troleibus">Troleibus</option> ' +
-                '      <option value="Bus">Bus</option> ' +
-                '      <option value="Mini-bus">Mini-bus</option> ' +
-                '    </select> ' +
-                '    <br> ' +
-                '    <tr> <td><br> ' +
-                '     Transportation number: <br><textarea id="trans_num"  style="resize:none" name="trans_num" rows="1" cols="10" maxlength="4"> </textarea> ' +
-                '     </td></tr> ' +
-                '    <td> ' +
-                '   <br> ' +
-                '   Were is it going? <br> ' +
-                '   <input type="radio" name="Passdir" value="city"> To City &nbsp; &nbsp; ' +
-                '   <input type="radio" name="Passdir" value="contryside"> To Countryside &nbsp; &nbsp; ' +
-                '   <br> ' +
-                '    <br> ' +
-                '    How full is it? <br> ' +
-                '    <input type="radio" name="lev" value="0"> 20% &nbsp; &nbsp; ' +
-                '    <input type="radio" name="lev" value="1"> 60% &nbsp; &nbsp; ' +
-                '    <input type="radio" name="lev" value="3"> 100% &nbsp; &nbsp; ' +
-                '    <br> ' +
-                '    </td></tr> ' +
-                '    <tr><td><input id="save" type="button" style="margin-top:5px" class="btn btn-primary" value="Save" ' + 'onclick=saveData()></td></tr> ' +
-                ' </table> ' +
-                ' </div>';
-
+//
+//
+//var driv_input =
+//                  "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />"+
+//                  "  <style>"+
+//                   " input[type=button], input[type=button], input[type=reset] {"+
+//                   "   background-color: #4CAF50;" +
+//                    "  border: none;" +
+//                    "  color: white;" +
+//                    "  padding: 16px 32px;" +
+//                    "  text-decoration: none;" +
+//                    "  margin: 4px 2px;" +
+//                    "  cursor: pointer;" +
+//                   " }" +
+//                   " </style>" +
+//                   " <div id=form action='' method='POST'>" +
+//                   "  <table>" +
+//                  " Were is it going? <br>" +
+//                  " <input type='radio' name='Drivedir' value='city'> To City &nbsp; &nbsp;" +
+//                  " <input type='radio' name='Drivedir' value='contryside'> To Countryside &nbsp; &nbsp;" +
+//                  " <br> " +
+//                  " <tr><td><input id='save' type='button' style='margin-top:5px' class='btn btn-primary' value='Save'" + "onclick='saveData()'></td></tr>"+
+//                 " </table>"+
+//                "</div>";
+//
+//var pass_input =
+//                '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> ' +
+//                '    <style> ' +
+//                '        input[type="button"], input[type="button"], input[type="reset"] { ' +
+//                '          background-color: "#4CAF50"; ' +
+//                '          border: "none"; ' +
+//                '          color: "white"; ' +
+//                '          padding: "16px 32px"; ' +
+//                '          text-decoration: "none"; ' +
+//                '          margin: "4px 2px"; ' +
+//                '          cursor: "pointer"; ' +
+//                '        } ' +
+//                '    </style> ' +
+//                '    <div id=form action="" method="POST"> ' +
+//                '     <table> ' +
+//                '    <tr> ' +
+//                '    <label for="cars">Type of Transportation:</label> <br> ' +
+//                '    <select name="trans_type" id="trans_type"> ' +
+//                '      <option value="Troleibus">Troleibus</option> ' +
+//                '      <option value="Bus">Bus</option> ' +
+//                '      <option value="Mini-bus">Mini-bus</option> ' +
+//                '    </select> ' +
+//                '    <br> ' +
+//                '    <tr> <td><br> ' +
+//                '     Transportation number: <br><textarea id="trans_num"  style="resize:none" name="trans_num" rows="1" cols="10" maxlength="4"> </textarea> ' +
+//                '     </td></tr> ' +
+//                '    <td> ' +
+//                '   <br> ' +
+//                '   Were is it going? <br> ' +
+//                '   <input type="radio" name="Passdir" value="city"> To City &nbsp; &nbsp; ' +
+//                '   <input type="radio" name="Passdir" value="contryside"> To Countryside &nbsp; &nbsp; ' +
+//                '   <br> ' +
+//                '    <br> ' +
+//                '    How full is it? <br> ' +
+//                '    <input type="radio" name="lev" value="0"> 20% &nbsp; &nbsp; ' +
+//                '    <input type="radio" name="lev" value="1"> 60% &nbsp; &nbsp; ' +
+//                '    <input type="radio" name="lev" value="3"> 100% &nbsp; &nbsp; ' +
+//                '    <br> ' +
+//                '    </td></tr> ' +
+//                '    <tr><td><input id="save" type="button" style="margin-top:5px" class="btn btn-primary" value="Save" ' + 'onclick=saveData()></td></tr> ' +
+//                ' </table> ' +
+//                ' </div>';
 
 
     var map;
@@ -80,8 +79,6 @@ var driv_input =
     var user_info;
     var search_num = '';
 
-
-    
       
 function initMap() {
     
@@ -122,20 +119,16 @@ function initMap() {
     //            gestureHandling: 'cooperative',
     });
     
+    requestPoints();
     
-    
-    
-    getUserInfo();
-    
-    document.getElementById('delButton').addEventListener('click', DelPoint);
-    document.getElementById('addButton').addEventListener('click', AddPoint);
-
-    setInputFilter(document.getElementById('search_num'), function(value) {
-    return /^-?\d*$/.test(value); });
-    
-    
-    update();
-    //searchFunc();
+    document.getElementById("point_btn").addEventListener("click", function(){
+        
+      if(document.getElementById("search_point")){
+         console.log('point');
+         searchFunc();
+      }
+        
+    });
 }
 
 //--------------------------------------------------------------------
@@ -151,172 +144,31 @@ function initMap() {
 
 //--------------------------------------------------------------------
       function searchFunc(){
-      search_num = document.getElementById('search_num').value;
+      search_num = document.getElementById('search_point').value;
+      requestPoints();
       }
       
 //--------------------------------------------------------------------
-
-      function setInputFilter(textbox, inputFilter) {
-        ['input', 'keydown', 'keyup', 'mousedown', 'mouseup', 'select', 'contextmenu', 'drop'].forEach(function(event) {
-          textbox.addEventListener(event, function() {
-            if (inputFilter(this.value)) {
-              this.oldValue = this.value;
-              this.oldSelectionStart = this.selectionStart;
-              this.oldSelectionEnd = this.selectionEnd;
-            } else if (this.hasOwnProperty('oldValue')) {
-              this.value = this.oldValue;
-              this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-            } else {
-              this.value = '';
-            }
-          });
-        });
-      }
-      
-//--------------------------------------------------------------------
-       
+//
 function initWindows(){
       
-     var Pass_formStr = pass_input;
-     var Driv_formStr = driv_input;
-     var messageStr = `" . MESSAGE_LOCATION_SAVED . "`;
+     var Pass_formStr = "pass_input";
+     var Driv_formStr = "driv_input";
+     var messageStr = "MESSAGE_LOCATION_SAVED ";
       
+    setTimeout(doNothing, 1000);
+    
+      infowindow = new google.maps.InfoWindow({
+          content: Driv_formStr
+      });
 
-      
-      if( user_info[0].user_type == 'Driver'){
-          infowindow = new google.maps.InfoWindow({
-              content: Driv_formStr
-          });
-      
-      } else {
-          infowindow = new google.maps.InfoWindow({
-              content: Pass_formStr
-          });
-      }
 
      messagewindow = new google.maps.InfoWindow({
-       content: document.getElementById('message')
+       content: messageStr
      });
 }
 
 
-//--------------------------------------------------------------------------------------
-      
-function AddPoint(){
-      
-   navigator.geolocation.clearWatch(update_id);
-      
-   initWindows()
-    
-  options = {
-    enableHighAccuracy: false,
-    timeout: 5000,
-    maximumAge: 20000
-  };
-      
-   if (navigator.geolocation) {
-     navigator.geolocation.getCurrentPosition(
-       (position) => {
-         const pos = {
-           lat: position.coords.latitude,
-           lng: position.coords.longitude,
-         };
-                                              
-         messagewindow.setPosition(pos);
-         infowindow.setPosition(pos);
-         infowindow.open(map);
-         map.setCenter(pos);
-        
-       },
-       () => {
-         handleLocationError(true, infowindow, map.getCenter());
-       },
-       () => {
-          options();
-       }
-     );
-      
-   } else {
-     // Browser doesn't support Geolocation
-     handleLocationError(false, infowindow, map.getCenter());
-   }
-      
-      update();
-}
-       
-//------------------------------------------------------------------------------------------
-      
-function DelPoint(){
-    navigator.geolocation.clearWatch(update_id);
-    initWindows();
-      const options = {
-        enableHighAccuracy: false,
-        timeout: 5000,
-        maximumAge: 20000
-      };
-          
-      
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
-          };
-
-        messagewindow.setPosition(pos);
-        map.setCenter(pos);
-          },
-          () => {
-            handleLocationError(true, infowindow, map.getCenter());
-          },
-        () => {
-           options();
-        }
-        );
-    } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infowindow, map.getCenter());
-    }
-                       
-    var url = 'https://web-class.auca.kg/~kushtar/BBus/DeletePoint.php?action=0';
-                       
-    var xhttp = new XMLHttpRequest();
-                       
-    xhttp.onreadystatechange = function() {
-         if (xhttp.readyState == 4) {
-           if (xhttp.status == 200) {
-                           
-           messagewindow.setContent('Successfully deleted');
-           messagewindow.open(map);
-           setTimeout(function(){messagewindow.close()}, 2000);
-           
-           userIsOnline = new Boolean(true);
-           } else if (xhttp.status == 201) {
-               messagewindow.setContent('Your point placed does not belong to Bishkek');
-               messagewindow.open(map);
-               setTimeout(function(){ window.location.reload(1);}, 2500);
-           }
-           if (xhttp.status == 202) {
-               messagewindow.setContent('You cannot submit now, you are on cooldown, check your office');
-               messagewindow.open(map);
-               setTimeout(function(){ window.location.reload(1);}, 2500);
-           }
-         }
-
-    };
-
-
-    xhttp.open('GET', url, true);
-    xhttp.send();
-
-    infowindow.close();
-      
-    update();
-}
-      
-      
-      
        
 //---------------------------------------------------------------------------------------------
        
@@ -454,35 +306,23 @@ function DelPoint(){
       function requestPoints() {
           markerTimeCheck();
 
-          if(user_info[0].user_type == 'Driver'){
-                    
-                var line_num = user_info[0].line_number;
-                
-                
-                $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?line_number='+ line_num,
-                dataType: 'json',
-                success: function(position, status){
-                  updatePoints(position);
-                }});
           
+          if(search_num == ''){
+            
+                $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?type=1',
+                   dataType: 'json',
+                   success: function(position, status){
+                     updatePoints(position);
+                   }});
+                  
           } else {
-          
-              if(search_num == ''){
-                
-                    $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?type=1',
-                       dataType: 'json',
-                       success: function(position, status){
-                         updatePoints(position);
-                       }});
-                      
-              } else {
-                    $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?search_num='+ search_num,
-                      dataType: 'json',
-                      success: function(position, status){
-                        updatePoints(position);
-                      }});
-              }
-        }
+                $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?search_num='+ search_num,
+                  dataType: 'json',
+                  success: function(position, status){
+                    updatePoints(position);
+                  }});
+          }
+        
     }
 
 //-------------------------------------------------------------
@@ -585,100 +425,38 @@ function DelPoint(){
           markers = markers.map(function(location, i) {
                                 
             location.addListener('click', function(){
-              
-               navigator.geolocation.clearWatch(update_id);
-               
                                  
                if (statewindow) {
                   statewindow.close();
                  }
-                                 
-                if (position[i].name == '$sesusername') {
-
-                     statewindow= new google.maps.InfoWindow({
-                         content:
-                        '<div style= width:100%; height:100%>' +
+                                       
+                      statewindow= new google.maps.InfoWindow({
+                          content:
+                       '<!DOCTYPE html>' +
+                       '<html lang=en>' +
+                       '<head>' +
+                       '</head>' +
+                       '<body>' +
+                       '<div style= width:100%; height:100%>' +
                             '<div style= float:center class = display: inline-block;>' +
                                     '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
-                                    '<br>Number :' + position[i].trans_num.toString() +
+                                    '<br>Line Number :' + position[i].trans_num +
                                     '<br>Direction :' + position[i].direct +
-                            '</div>' +
-                        '</div>'
-                    });
-                                 
-                } else if (user_info.length === 0) {
-    
-                    statewindow= new google.maps.InfoWindow({
-                         content:
-                            '<div style= width:100%; height:100%>' +
-                               '<div style= float:center class = display: inline-block;>' +
-                                       '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
-                                       '<br>Number :' + position[i].trans_num.toString() +
-                                       '<br>Direction :' + position[i].direct +
-                               '</div>' +
-                           '</div>'
-                        });
-                                 
-                 } else {
-                    var userPos = new google.maps.LatLng(curUserLat, curUserLng);
-                    var marPos = new google.maps.LatLng(position[i].lat, position[i].lng);
-                    var distance = google.maps.geometry.spherical.computeDistanceBetween(userPos, marPos);
-                                 
-                      if(distance < 11150){
-                          
-                          statewindow= new google.maps.InfoWindow({
-                              content:
-                           '<!DOCTYPE html>' +
-                           '<html lang=en>' +
-                           '<head>' +
-                           '</head>' +
-                           '<body>' +
-                           '<div style= width:100%; height:100%>' +
-                                '<div style= float:center class = display: inline-block;>' +
-                                        '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
-                                        '<br>Line Number :' + position[i].trans_num +
-                                        '<br>Direction :' + position[i].direct +
-                                        '<br>' +
-                                        'How full is it? <br>' +
-                                '</div>' +
-                                '</div>' +
-                                   '<form>' +
-                                        '<input type=radio id=new_lev1 name=new_lev value=0> 20% &nbsp; &nbsp;' +
-                                        '<input type=radio id=new_lev1 name=new_lev value=1> 60% &nbsp; &nbsp;' +
-                                        '<input type=radio id=new_lev1 name=new_lev value=3> 100% &nbsp; &nbsp;' +
-                                        '<br>' +
-                                   '</form>' +
+                                    '<br>Level :' + position[i].level +
+                                    '<br>Type of User :' + position[i].point_type +
+                                    '<br>User ID :' + position[i].user_id +
+                                    '<br>User ID :' + position[i].name +
                                     '<br>' +
-                                '<button type=button onclick = levelChange(' +position[i].user_id +')> Change </button> &emsp;&emsp;&emsp;&emsp;' +
-                                '<button type=button onclick = reportFake('+ position[i].user_id +',' + position[i].lat + ',' + position[i].lng +')> Fake </button>' +
-                            '</body>' +
-                             '</html>'
-                          });
-                                 
-                     } else {
-                         statewindow= new google.maps.InfoWindow({
-                              content:
-                                '<!DOCTYPE html>' +
-                                '<html lang=en>' +
-                                '<title> Transport information</title>' +
-                                '<div style= width:100%; height:100%>' +
-                                    '<div style= float:center class = display: inline-block;>' +
-                                            '<img src=' + markers[i].getTitle() + ' width=100px height=100px>' +
-                                            '<br>Number :' + position[i].trans_num.toString() +
-                                            '<br>Direction :' + position[i].direct +
-                                    '</div>' +
-                                '</div>' +
-                                '</html>'
-                             });
-                     }
-                 }
+                            '</div>' +
+                            '</div>' +
+                            '<button type=button onclick = reportFake('+ position[i].user_id +',' + position[i].lat + ',' + position[i].lng +')> Delete </button>' +
+                        '</body>' +
+                         '</html>'
+                      });
+                             
                                  
                 statewindow.open(map, location);
                     
-                google.maps.event.addListener(statewindow,'closeclick',function(){
-                   update();
-                });
-                                 
              });
        
                                 
@@ -686,66 +464,19 @@ function DelPoint(){
          });
             
           showMarkers();
-         
-       
-          if (position.length > 1) {
-              //map.fitZoom();
-          } else {
-              map.setCenter (lat, lng);
-          }
-      
    }
       
-//--------------------------------------------------------------------
-      
-      
-      
-      function levelChange(user_id, lat, lng){
-    
-      var new_level;
-      index = document.getElementsByName('new_lev');
-      
-      for (var i = 0, length = index.length; i < length; i++)
-      {
-          if (index[i].checked)
-          {
-           new_level = index[i].value;
-           break;
-          }
-      }
-
-      
-      statewindow.close();
-
-        var formData = {
-                user_id: user_id
-                ,new_level: new_level
-                ,type: 0
-             };
-
-             $.ajax({
-                     type: 'POST',
-                     url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php',
-                     data: formData,
-                     dataType: 'text',
-                     cache: false,
-                     success: function (result, status) {
-    
-                  }
-             });
-      setTimeout(update, 1000);
-      }
-                 
+        
 //---------------------------------------------------------------------
             
       function reportFake(user_id, lat, lng)
       {
-      
+          
             statewindow.close();
-
+            initWindows();
               var formData = {
                       user_id: user_id
-                      ,type: 1
+                      ,type: 3
                    };
       
                $.ajax({
@@ -755,8 +486,9 @@ function DelPoint(){
                        dataType: 'text',
                        cache: false,
                        success: function (result, status) {
+                            
                           if(result == 200){
-                              messagewindow.setContent('Report has deleted Marker!');
+                              messagewindow.setContent('Marker is deleted!');
                               messagewindow.setPosition(new google.maps.LatLng(lat, lng));
                              messagewindow.open(map);
                              setTimeout(function(){messagewindow.close()}, 4000);
@@ -768,7 +500,8 @@ function DelPoint(){
                           }
                     }
                });
-            setTimeout(update, 1000);
+          
+            setTimeout(requestPoints, 1000);
       }
 
 //----------------------------------------------------------------
@@ -789,77 +522,6 @@ function DelPoint(){
                   }
              });
       }
-       
-//--------------------------------------------------------------
-       
-function update(){
-      
-    
-  setTimeout(doNothing, 7000);
-      
-  options = {
-    enableHighAccuracy: false,
-    timeout: 2000,
-    maximumAge: 20000
-  };
-
-  const pos = new Object();
-  
-  var lat = 9;
-  var lng = 9;
-
-  
-      
-  update_id = navigator.geolocation.watchPosition(
-    ShowPosition
-    ,
-    () => {
-       error();
-    },
-    () => {
-       options();
-    }
-  );
-}
-       
-       
-       
-function ShowPosition(position) {
-
-     lat = position.coords.latitude;
-     lng = position.coords.longitude;
-     
-      curUserLat = position.coords.latitude;
-      curUserLng = position.coords.longitude;
-
-     var url = 'https://web-class.auca.kg/~kushtar/BBus/UpdatePoint.php?lat=' + lat + '&lng=' + lng;
-                                     
-     var xhttp = new XMLHttpRequest();
-     
-     xhttp.onreadystatechange = function() {
-
-     
-       if (xhttp.readyState == 4) {
-         if (xhttp.status == 205) {
-                                     
-         } else if (xhttp.status == 200) {
-     
-         } else {
-     
-         }
-
-         if (xhttp.status == 202) {
-
-         }
-       }
-
-     };
-     
-     xhttp.open('GET', url, true);
-     xhttp.send();
-      
-    requestPoints();
-  }
 
 //----------------------------------------------------------------
        
@@ -878,7 +540,6 @@ function ShowPosition(position) {
       }
             
       //---------------------------------------------------------------------
-             
 
       
       function doNothing () {

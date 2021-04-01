@@ -157,7 +157,15 @@ if (!empty($_GET)) {
             } else {
                 mysqli_query($conn,"UPDATE Users SET user_report = $new_ureport WHERE id = $user_id");
             }
-            
+        } else if($_POST['type'] == 3){
+         
+        $del_id = $_POST['user_id'];
+            if(mysqli_query($conn,"DELETE FROM Markers WHERE user_id = $del_id"))
+            {
+                echo 200;
+            } else {
+                echo 201;
+            }
         }
     } else {
         

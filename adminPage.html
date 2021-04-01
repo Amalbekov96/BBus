@@ -3,11 +3,12 @@
         
         <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
         <meta http-equiv="content-type" content="text/html;" charset="utf-8"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+        
         <link rel="apple-touch-icon" href="../BBus/images/icons/App_Icon_192.png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>BOT</title>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -18,11 +19,41 @@
         <script src="../BBus/app.js"></script>
         <meta name = "theme-color" content="#FFE1C4">
             
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+            
         <?php
             session_start();
             header("Content-Type: text/html; charset=utf-8");
             require_once ("./config.php");
         ?>
+        
+        
+        <div class="container bg-dark text-white fixed-bottom">
+            
+          <div class="row bg-white">
+              <div class="input-group">
+                   <input type="search" id="search_point" placeholder="Search"  class="form-control">
+                   <span class="input-group-btn">
+                     <button class="btn btn-default w-100" id="point_btn" name="search_btn" type="button" >
+                         <i class="fa fa-search"></i>
+                     </button>
+                   </span>
+              </div>
+          </div>
+          
+          <div class="row">
+              <div class="btn-group-lg d-flex w-100" role="group" aria-label="group">
+                       <button type="button" id="Points" class="btn btn-dark text-white w-100"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Points</button>
+                       <button type="button" id="Lines" class="btn btn-dark text-white w-100"><i class="fas fa-route" aria-hidden="true"></i> Lines</button>
+                       <button type="button" id="Users" class="btn btn-dark text-white w-100"><i class="far fa-user pr-2" aria-hidden="true"></i> Users</button>
+              </div>
+           </div>
+        </div>
+        
+        
         
 
         <script async defer  src="https://maps.googleapis.com/maps/api/js?libraries=geometry&key=AIzaSyBlLms-yD7lNgRk3z4LIpv79WvNTP2aY1I&callback=initMap" >
@@ -31,15 +62,14 @@
         <link rel="stylesheet" href="./adminStyle.css">
         <script src="./adminJS.js"></script>
         
+
+        
     </head>
     <body>
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark ">
               
-          <button id = "addButton" type="button" class="btn btn-success btn-circle btn-xl" > Add Point </button>
-          <button id = "delButton" type="button" class="btn btn-success btn-circle btn-xl"> Del Point </button>
-              
-          <a class="navbar-brand align-self-center" href="#">BOT</a>
+          <a class="navbar-brand align-self-center" href="#">Bishkek Online Transport</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -69,14 +99,59 @@
         </nav>
         
         <div id="map" height="90%" width="100%" ></div>
- 
-          <div class="input-group fixed-bottom">
-            <input type="search" id="search_num" placeholder="Search" maxlength="3" class="form-control">
-            <span class="input-group-btn">
+        
+        <script>
+            document.getElementById("Lines").addEventListener("click", function(){
+                                                  
+                $('input[type=search]').attr('id', 'search_line');
+                document.getElementById("search_line").value = "";
+                $("button[name='search_btn']").attr('id', 'line_btn');
+                                                              
+                var myScript = document.createElement("script");
+                myScript.setAttribute("src", "https://web-class.auca.kg/~kushtar/BBus/adminLine.js");
+                myScript.setAttribute("onload", "main()");
+                myScript.setAttribute("async", "false");
+                                                              
+                var head = document.head;
+                head.insertBefore(myScript, head.firstElementChild);
+                
+             });
              
-              <button class="btn btn-default" id="search_btn" type="button" onclick="searchFunc()">SEARCH</button>
-            </span>
-          </div>
-    
+             document.getElementById("Points").addEventListener("click", function(){
+                                                                                               
+                $('input[type=search]').attr('id', 'search_point');
+                document.getElementById("search_point").value = "";
+                                                                
+                $("button[name='search_btn']").attr('id', 'point_btn');
+                                                                
+                var myScript = document.createElement("script");
+                myScript.setAttribute("src", "https://web-class.auca.kg/~kushtar/BBus/adminJS.js");
+                myScript.setAttribute("onload", "initMap()");
+                myScript.setAttribute("async", "false");
+
+                 var head = document.head;
+                 head.insertBefore(myScript, head.firstElementChild);
+                 $('#addLine').remove();
+                
+              });
+              
+              document.getElementById("Users").addEventListener("click", function(){
+                                                                
+                    $('input[type=search]').attr('id', 'search_user');
+                    document.getElementById("search_user").value = "";
+                    $("button[name='search_btn']").attr('id', 'user_btn');
+                                                                
+                  var myScript = document.createElement("script");
+                  myScript.setAttribute("src", "https://web-class.auca.kg/~kushtar/BBus/adminUser.js");
+                  myScript.setAttribute("onload", "userMain()");
+                  myScript.setAttribute("async", "false");
+
+                  var head = document.head;
+                  head.insertBefore(myScript, head.firstElementChild);
+                  $('#addLine').remove();
+                  
+               });
+              
+        </script>
 </body>
 </html>
