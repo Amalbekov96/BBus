@@ -78,6 +78,21 @@ if (!empty($_GET)) {
 
          echo($json_encoded);
     
+    } else if(isset($_GET['line'])) {
+        
+        $line = $_GET['line'];
+        
+        $result = mysqli_query($conn,"SELECT * FROM `Lines` WHERE lineNumber = $line");
+         $json = [];
+        
+         while($row = mysqli_fetch_assoc($result)){
+          $json[] = $row;
+         }
+
+         $json_encoded = json_encode($json,JSON_NUMERIC_CHECK );
+
+         echo($json_encoded);
+    
     } else {
          $result = mysqli_query($conn,"SELECT * FROM Markers");
          $json = [];

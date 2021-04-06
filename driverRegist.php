@@ -125,7 +125,13 @@ $html = '
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    
    <style>
+    
+    body {
+      background-color: rgb(38, 38, 38);
+      color: white;
+    }
 
    .signup-form {
        width: 80%;
@@ -149,7 +155,7 @@ $html = '
        display:table-cell;
        vertical-align:middle;
    }
-
+    
    </style>
    </head>
    <body>
@@ -209,9 +215,6 @@ $html = '
    
                <div class="form-group">
                    <button type="submit" name="Submit" class="btn btn-success btn-lg">Sign Up</button>
-   
-                    <button id="Go_back" class="btn btn-success btn-lg">Go Back</button>
-   
                    
                </div>
                <div class="text-center">Already have an account? <a href="./login.php">Login here</a></div>

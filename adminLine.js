@@ -193,7 +193,6 @@ function main() {
     
     document.getElementById("line_btn").addEventListener("click", function(){
         if(document.getElementById("search_line")){
-           console.log('line');
            searchLineFunc();
         }
         
@@ -277,34 +276,10 @@ function drawLine(){
 //--------------------------------------------------------------------
 
 function showRoute(){
-    
-//
-//  directionsRenderer.addListener("directions_changed", () => {
-//    computeTotalDistance(directionsRenderer.getDirections());
-//  });
-
     map.addListener("click", (event) => {
         points.push(event.latLng);
         drawLine();
     });
-
-
-//
-//function computeTotalDistance(result) {
-//  let total = 0;
-//  const myroute = result.routes[0];
-//
-//  if (!myroute) {
-//    return;
-//  }
-//
-//  for (let i = 0; i < myroute.legs.length; i++) {
-//    total += myroute.legs[i].distance.value;
-//  }
-//  total = total / 1000;
-//  document.getElementById("total").innerHTML = total + " km";
-//}
-
 }
 
 //--------------------------------------------------------------------
@@ -347,17 +322,14 @@ function floatToString(num) {
 
      
      var points_str = "";
-     
-     for (var i = 0; i < points.length; i++)
+     for (var i = 0; i < points.length-1; i++)
      {
-         points_str += floatToString(points[0].lat());
+         points_str += floatToString(points[i].lat());
          points_str += ',';
-         points_str += floatToString(points[0].lng());
+         points_str += floatToString(points[i+1].lng());
          points_str += ',';
      }
-     
-     console.log(points_str);
-     
+          
       var formData = {
          line_number: line_number
          ,trans_type: trans_type
@@ -372,29 +344,10 @@ function floatToString(num) {
               dataType: 'text',
               cache: false,
               success: function (result, status) {
-             
-//                 if(result == 200){
-//                     messagewindow.setContent('Successfully saved');
-//                    messagewindow.open(map);
-//                    setTimeout(function(){messagewindow.close()}, 2000);
-//                 } else if(result == 201){
-//                     messagewindow.setContent('Your point placed does not belong to Bishkek');
-//                     messagewindow.open(map);
-//                     setTimeoutll(function(){messagewindow.close()}, 2000);
-//                 } else if(result == 202){
-//                    messagewindow.setContent('You cannot submit now, you are on cooldown, check your office');
-//                    messagewindow.open(map);
-//                    setTimeout(function(){messagewindow.close()}, 2000);
-//                 } else if(result == 203){
-//                    messagewindow.setContent('There were some kind of error!');
-//                    messagewindow.open(map);
-//                    setTimeout(function(){messagewindow.close()}, 2000);
-//                 }
                }
-                 
           });
            
-
+        console.log(points_str);
         infowindow.close();
         points = [];
         main();
@@ -416,7 +369,6 @@ function floatToString(num) {
                    }});
                   
           } else {
-                console.log(search_num);
                 $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/adminBack.php?search_num='+ search_num,
                   dataType: 'json',
                   success: function(data, status){

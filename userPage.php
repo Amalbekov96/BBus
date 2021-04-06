@@ -4,13 +4,12 @@ header('Content-Type: text/html; charset=utf-8');
     
 require_once ('./config.php');
     
-//$logout;
-//
-//if(isset($_GET['logout']) == 1) {
-//  unset($_SESSION['username']);
-//  unset($_SESSION['id']);
-//  session_destroy();
-//}
+
+if (!isset($_SESSION['id'])) {
+    htmlGetBack("You have not loged in", "login.php", "Go Back");
+    logAction($conn, "empty", "empty");
+    exit;
+}
 
 $conn;
 
@@ -57,15 +56,19 @@ print('<!DOCTYPE html>
       <script src="../BBus/app.js"></script>
       <meta name = "theme-color" content="#FFE1C4">
       
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+  
 </head>
 <body>
+      
+      
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
       
-  <button id = "addButton" type="button" class="btn btn-success btn-circle btn-xl" > Add Point </button>
-  <button id = "delButton" type="button" class="btn btn-success btn-circle btn-xl"> Del Point </button>
-      
-  <a class="navbar-brand" href="#">BOT</a>
+  <a class="navbar-brand" href="#">Bishkek Online Transport</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -84,24 +87,43 @@ print('<!DOCTYPE html>
       <li class="nav-item">
         <a class="nav-link" href="./pages/AboutUs.html">About</a>
       </li>
+      
+      <li class="nav-item">
+        <a class="nav-link" href="./adminLogin.php">Admin page</a>
+      </li>
+      
       <li class="nav-item">
         <a class="nav-link" href="./login.php">Login</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="./login.php">Logout</a>
+        <a class="nav-link" href="./login.php?logout=1">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
 
-  <div class="input-group fixed-bottom">
-    <input type="search" id="search_num" placeholder="Search" maxlength="3" class="form-control">
-    <span class="input-group-btn">
-     
-      <button class="btn btn-success" id="search_btn" type="button" onclick="searchFunc()">SEARCH</button>
-    </span>
-  </div>
-  
+   
+      <div class="container bg-dark text-white fixed-bottom">
+          
+        <div class="row bg-white">
+            <div class="input-group">
+                 <input type="search" id="search_num" placeholder="Search" maxlength="3"  class="form-control">
+                 <span class="input-group-btn">
+                   <button class="btn btn-default w-100" id="search_btn" onclick="searchFunc()" name="search_btn" type="button" >
+                       <i class="fa fa-search"></i>
+                   </button>
+                 </span>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="btn-group-lg d-flex w-100" role="group" aria-label="group">
+                     <button type="button" id="addButton" class="btn btn-dark text-white w-100"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Add Point</button>
+                     <button type="button" id="delButton" class="btn btn-dark text-white w-100"><i class="fas fa-trash-alt" aria-hidden="true"></i> Delete Point</button>
+            </div>
+         </div>
+      </div>
+
 </body>
 </html>');
       
@@ -227,6 +249,7 @@ function initMap() {
 //--------------------------------------------------------------------
       function searchFunc(){
       search_num = document.getElementById('search_num').value;
+      getLines();
       }
       
 //--------------------------------------------------------------------
@@ -322,72 +345,79 @@ function AddPoint(){
 //------------------------------------------------------------------------------------------
       
 function DelPoint(){
-    navigator.geolocation.clearWatch(update_id);
-    initWindows();
-      const options = {
-        enableHighAccuracy: false,
-        timeout: 5000,
-        maximumAge: 20000
-      };
-          
+      navigator.geolocation.clearWatch(update_id);
       
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude,
+    if (confirm('Are you sure you want to delete your point?')) {
+        initWindows();
+          const options = {
+            enableHighAccuracy: false,
+            timeout: 5000,
+            maximumAge: 20000
           };
+              
+          
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const pos = {
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+              };
 
-        messagewindow.setPosition(pos);
-        map.setCenter(pos);
-          },
-          () => {
-            handleLocationError(true, infowindow, map.getCenter());
-          },
-        () => {
-           options();
+            messagewindow.setPosition(pos);
+            map.setCenter(pos);
+              },
+              () => {
+                handleLocationError(true, infowindow, map.getCenter());
+              },
+            () => {
+               options();
+            }
+            );
+        } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infowindow, map.getCenter());
         }
-        );
-    } else {
-    // Browser doesn't support Geolocation
-    handleLocationError(false, infowindow, map.getCenter());
-    }
-                       
-    var url = 'https://web-class.auca.kg/~kushtar/BBus/DeletePoint.php?action=0';
-                       
-    var xhttp = new XMLHttpRequest();
-                       
-    xhttp.onreadystatechange = function() {
-         if (xhttp.readyState == 4) {
-           if (xhttp.status == 200) {
                            
-           messagewindow.setContent('Successfully deleted');
-           messagewindow.open(map);
-           setTimeout(function(){messagewindow.close()}, 2000);
-           
-           userIsOnline = new Boolean(true);
-           } else if (xhttp.status == 201) {
-               messagewindow.setContent('Your point placed does not belong to Bishkek');
+        var url = 'https://web-class.auca.kg/~kushtar/BBus/DeletePoint.php?action=0';
+                           
+        var xhttp = new XMLHttpRequest();
+                           
+        xhttp.onreadystatechange = function() {
+             if (xhttp.readyState == 4) {
+               if (xhttp.status == 200) {
+                               
+               messagewindow.setContent('Successfully deleted');
                messagewindow.open(map);
-               setTimeout(function(){ window.location.reload(1);}, 2500);
-           }
-           if (xhttp.status == 202) {
-               messagewindow.setContent('You cannot submit now, you are on cooldown, check your office');
-               messagewindow.open(map);
-               setTimeout(function(){ window.location.reload(1);}, 2500);
-           }
-         }
+               setTimeout(function(){messagewindow.close()}, 2000);
+               
+               userIsOnline = new Boolean(true);
+               } else if (xhttp.status == 201) {
+                   messagewindow.setContent('Your point placed does not belong to Bishkek');
+                   messagewindow.open(map);
+                   setTimeout(function(){ window.location.reload(1);}, 2500);
+               }
+               if (xhttp.status == 202) {
+                   messagewindow.setContent('You cannot submit now, you are on cooldown, check your office');
+                   messagewindow.open(map);
+                   setTimeout(function(){ window.location.reload(1);}, 2500);
+               }
+             }
 
-    };
+        };
 
 
-    xhttp.open('GET', url, true);
-    xhttp.send();
+        xhttp.open('GET', url, true);
+        xhttp.send();
 
-    infowindow.close();
+        infowindow.close();
+          
+        update();
       
-    update();
+    } else {
+        infowindow.close();
+        update();
+    }
 }
       
       
@@ -550,6 +580,7 @@ function DelPoint(){
                        }});
                       
               } else {
+                    //to get the Points from db
                     $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?search_num='+ search_num,
                       dataType: 'json',
                       success: function(position, status){
@@ -558,6 +589,54 @@ function DelPoint(){
               }
         }
     }
+
+//-------------------------------------------------------------
+      /// to get the lines from the db
+      function getLines(){
+            
+            $.ajax({url: 'https://web-class.auca.kg/~kushtar/BBus/Markers.php?line='+ search_num,
+            dataType: 'json',
+            success: function(position, status){
+              showLines(position);
+            }});
+      }
+      
+//-------------------------------------------------------------
+      var flightPath;
+      function showLines(position){
+          
+          if(position.length != 0){
+                var lines = position[0].coordinates.split(',');
+                console.log(position[0].coordinates);
+                var lineCor = [];
+                for (var i = 0; i < (lines.length - 1); i += 2){
+                      lineCor.push(new google.maps.LatLng(parseFloat(lines[i]), parseFloat(lines[i + 1])));
+                      
+                }
+                
+                for (var i = 0; i < lineCor.length; i++){
+                    console.log(i + ' :' + lineCor[i].lat() + ' ' + lineCor[i].lng() + ' ' );
+                }
+      
+                if(lineCor.length != 0){
+                      flightPath = new google.maps.Polyline({
+                      path: lineCor,
+                      geodesic: true,
+                      strokeColor: '#FF0000',
+                      strokeOpacity: 1.0,
+                      strokeWeight: 2,
+                    });
+      
+                    flightPath.setMap(map);
+                }
+          } else {
+              if(flightPath != null){
+                flightPath.setMap(null);
+              }
+              
+          }
+      }
+      
 
 //-------------------------------------------------------------
       
@@ -758,9 +837,9 @@ function DelPoint(){
                                 
             return location;
          });
-            
-          showMarkers();
-         
+      
+          
+             showMarkers();
        
           if (position.length > 1) {
               //map.fitZoom();

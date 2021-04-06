@@ -93,67 +93,6 @@ if (isset($_POST['Submit']))  {
   htmlGetBack($prob, $link, $message);
   exit;
 }
-
-
-//$html = '
-//<!DOCTYPE html>
-//<html lang="en">
-//
-//<head>
-//
-//    <style>
-//    .font-robo {
-//      font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
-//    }
-//
-//    </style>
-//
-//
-//</head>
-//
-//<body>
-//
-//
-//    <h2 class="title">Passenger registretion </h2>
-//    <form action="" method="POST">
-//
-//
-//        <div class="input-group">
-//            <input class="input--style-2" type="text" placeholder="Username" name="name">
-//        </div>
-//
-//        <div class="input-group">
-//            <input class="input--style-2" type="text" placeholder="Phone number" name="phone_number">
-//        </div>
-//
-//        <div class="input-group">
-//            <input class="input--style-2" type="password" placeholder="Password" name="password">
-//        </div>
-//
-//        <div class="input-group">
-//            <input class="input--style-2" type="password" placeholder="Confirm password" name="con_password">
-//        </div>
-//
-//        <div class="p-t-30">
-//            <button class="btn btn--radius btn--green" type="submit" value ="Submit" name="Submit" id="submit" >Register</button>
-//        </div>
-//    </form>
-//
-//    <button id="Go_back" class="btn2 btn--radius btn2--green">Go Back</button>
-//
-//
-//    <script type="text/javascript">
-//      document.getElementById("Go_back").onclick = function () {
-//          location.href = "index.php";
-//      };
-//
-//    </script>
-//
-//</body>
-//</html>
-//<!-- end document-->
-//';
-    
     
 $html = '
     <!DOCTYPE html>
@@ -170,7 +109,13 @@ $html = '
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
 
+    body {
+      background-color: rgb(38, 38, 38);
+      color: white;
+    }
+    
     .signup-form {
+    margin-top: 90px;
         width: 80%;
         justify-content: center;
         align-items: center;
@@ -233,9 +178,7 @@ $html = '
     
                 <div class="form-group">
                     <button type="submit" name="Submit" class="btn btn-success btn-lg">Sign Up</button>
-    
-                     <button id="Go_back" class="btn btn-success btn-lg">Go Back</button>
-    
+        
                     
                 </div>
                 <div class="text-center">Already have an account? <a href="./login.php">Login here</a></div>
