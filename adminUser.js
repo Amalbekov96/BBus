@@ -54,22 +54,13 @@ function printLines(data){
     for (var i=0; i < data.length; i++) {
         
         $("#mainCon").append("<div class='row align-items-center' style='border:1px solid black;'>" +
-                               "<div class='col-2 text-center' style='font-size: 100%'>"+ data[i].uname +"</div>" +
-                               
-                                "<div class='col-4'>" +
-                                    "Id: <br>" +
-                                    "User Type: <br>" +
-                                    "Phone: <br>" +
-                                    "password: <br>" +
-                                    "Reported count: " +
+                               "<div class='col-3 text-center' style='font-size: 100%'>"+ '0' + data[i].phone_number + "</div>" +
+                                "<div class='col-7'>" +
+                                    "Id: " + data[i].id + "<br>" +
+                                    "User Type: " + data[i].user_type + "<br>" +
+                                    "password: <br>" + data[i].pswd + "<br>" +
+                                    "Reported count: " + data[i].user_report +
                                 "</div>" +
-                                 "<div class='col-4'>" +
-                                     data[i].id + "<br>" +
-                                     data[i].user_type + "<br>" +
-                                     data[i].phone_number + "<br>" +
-                                     data[i].pswd + "<br>" +
-                                     data[i].user_report +
-                                 "</div>" +
                                "<div class='col-2'>" +
                                     "<button type='button' onclick='delUser("+ data[i].id + ")' class='btn btn-link'> <i class='fas fa-trash-alt'></i></button>" +
                                "</div>" +

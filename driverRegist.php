@@ -6,7 +6,6 @@ if (isset($_POST['Submit']))  {
 
     
   $ip = $_SERVER['REMOTE_ADDR'];
-  $username = $_POST['username'];
   $phone_number = $_POST['phone_number'];
   $password = $_POST['password'];
   $con_password = $_POST['confirm_password'];
@@ -14,7 +13,7 @@ if (isset($_POST['Submit']))  {
   $line_number =$_POST['line_number'];
 
 
-  $result = mysqli_query($conn, "SELECT * FROM Users WHERE uname = '$username'");
+  $result = mysqli_query($conn, "SELECT * FROM Users WHERE phone_number = '$phone_number'");
   $row = mysqli_fetch_assoc($result);
 
   $message = "Go back";
@@ -23,8 +22,8 @@ if (isset($_POST['Submit']))  {
   $prob;
   if(mysqli_num_rows($result)== 0){
       
-    if (strlen($username) == 0) {
-    $prob = "You didn't input your username"; 
+    if (strlen($phone_number) == 0) {
+    $prob = "You didn't input your phone number";
     logError("$ip bypassed HTML and submitted empty username");
     }
 
@@ -46,16 +45,16 @@ if (isset($_POST['Submit']))  {
     $line_number = mysqli_escape_string($conn, $line_number);
     $phone_number = mysqli_escape_string($conn, $phone_number);
 
-    mysqli_query($conn, "INSERT into Users (uname, pswd, phone_number,user_type, line_number, trans_type, ip) values ('$username', '$password', '$phone_number', 'Driver', '$line_number', '$trans_type', '$ip');");
+    mysqli_query($conn, "INSERT into Users (pswd, phone_number,user_type, line_number, trans_type, ip) values ('$password', '$phone_number', 'Driver', '$line_number', '$trans_type', '$ip');");
 
-    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where uname = '$username'");
+    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where phone_number = '$phone_number'");
     // logAction($conn, $username, "Created");  
     }
 
   } else {
 
-    if (strlen($username) == 0) {
-    $prob = "You didn't input your username"; 
+    if (strlen($phone_number) == 0) {
+    $prob = "You didn't input your phone number";
     logError("$ip bypassed HTML and submitted empty username");
     }
     else if (strlen($password) < 6) {
@@ -86,7 +85,7 @@ if (isset($_POST['Submit']))  {
     $line_number = mysqli_escape_string($conn, $line_number);
     $phone_number = mysqli_escape_string($conn, $phone_number);
         
-        if(mysqli_query($conn, "INSERT into Users (uname, pswd, phone_number,user_type, line_number, trans_type, ip) values ('$username', '$password', '$phone_number', 'Driver', '$line_number', '$trans_type', '$ip');")){
+        if(mysqli_query($conn, "INSERT into Users (pswd, phone_number,user_type, line_number, trans_type, ip) values ('$password', '$phone_number', 'Driver', '$line_number', '$trans_type', '$ip');")){
             echo 'error.. The error is '. mysqli_error($conn);
         } else {
             echo 'error.. The error is '. mysqli_error($conn);
@@ -94,7 +93,7 @@ if (isset($_POST['Submit']))  {
         
         
         
-    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where uname = '$username'");
+    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where phone_number = '$phone_number'");
     // logAction($conn, $username, "Created");
     }
   }
@@ -166,12 +165,6 @@ $html = '
                <h2>Sign Up</h2>
                <p>Please fill in this form to create driver account!</p>
                <hr>
-               <div class="form-group" >
-                   <div class="input-group">
-                       <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                       <input type="text" class="form-control" name="username" placeholder="Username" required="required">
-                   </div>
-               </div>
                <div class="form-group">
                    <div class="input-group">
                        <span class="input-group-addon"><i class="fa fa-phone"></i></span>

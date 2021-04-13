@@ -5,13 +5,6 @@ date_default_timezone_set('Asia/Almaty');
 header("Content-Type: text/html; Charset=UTF-8");
 
 $ip = $_SERVER['REMOTE_ADDR'];
-// if (empty($_SESSION)) {
-// htmlGetBack("Anouthorized users cannot view this page","index.php" ,"Go back" );
-// logError("$ip tried to access this page without authorizing");
-// exit;
-// }
-    
-    
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -31,20 +24,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $line_number = $_POST['line_number'];
   $trans_type = $_POST['trans_type'];
   $direct = $_POST['direct'];
-  $username = $_SESSION['username'];
+  $phone_number = $_SESSION['phone_number'];
   $level = $_POST['lev'];
 
      $user_check = mysqli_query($conn, "SELECT * FROM Markers WHERE user_id = '$id'");
 
-     
-    
     if(mysqli_num_rows($user_check) > 0){
         echo 203;
         logError("Tried to locate two busses");
     }
      
      $pointLocation = new pointLocation();
-     $user_arr = mysqli_query($conn, "SELECT * from Users where uname = '$username'");
+     $user_arr = mysqli_query($conn, "SELECT * from Users where phone_number = '$phone_number'");
      $row = mysqli_fetch_array($user_arr,MYSQLI_ASSOC);
      $user_type = $row['user_type'];
      
@@ -59,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $message = "Your point placed does not belong to Bishkek";
         echo 201;
 
-    logError("$username ($id) tried to submit a point outside of Bishkek: $lat $lon");
+    logError("$phone_number ($id) tried to submit a point outside of Bishkek: $lat $lon");
         $link = "index.php";
         $message2 = "Try again";
         htmlGetBack($message, $link, $message2);
@@ -120,10 +111,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //        }
 //        else {
 //
+            
         
             if($point_type == 'Driver'){
                 $level = 0;
-                $sql = "INSERT INTO Markers (name, user_id, region, lat, lng, direct, point_type, add_time, trans_type, trans_num, level) VALUES ('".$username."', '".$id."', '".$region."', '".$lat."', '".$lon."', '".$direct."', '".$point_type."', NOW(), '".$trans_type."', '".$line_number."', '".$level."')";
+                $sql = "INSERT INTO Markers (phone_number, user_id, region, lat, lng, direct, point_type, add_time, trans_type, trans_num, level) VALUES ('".$phone_number."', '".$id."', '".$region."', '".$lat."', '".$lon."', '".$direct."', '".$point_type."', NOW(), '".$trans_type."', '".$line_number."', '".$level."')";
 
                 mysqli_query($conn, "UPDATE Users set last_submission = NOW() where id = '$id'");
                
@@ -139,6 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             } else {
                 
+               
 //                echo $username;
 //                echo $id;
 //                echo $region;
@@ -150,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //                echo $line_number;
 //                echo $level;
                 
-                    $sql = "INSERT INTO Markers (name, user_id, region, lat, lng, direct, point_type, add_time, trans_type, trans_num, level) VALUES ('".$username."', '".$id."', '".$region."', '".$lat."', '".$lon."', '".$direct."', '".$point_type."', NOW(), '".$trans_type."', '".$line_number."', '".$level."')";
+                    $sql = "INSERT INTO Markers (phone_number, user_id, region, lat, lng, direct, point_type, add_time, trans_type, trans_num, level) VALUES ('".$phone_number."', '".$id."', '".$region."', '".$lat."', '".$lon."', '".$direct."', '".$point_type."', NOW(), '".$trans_type."', '".$line_number."', '".$level."')";
 
                     mysqli_query($conn, "UPDATE Users set last_submission = NOW() where id = '$id'");
                    
@@ -159,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         echo '200'; exit;
                     }
                     else {
-                        echo '202' exit;
+                        echo '202'; exit;
                         
     //                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
                     //logError(mysqli_error($conn));

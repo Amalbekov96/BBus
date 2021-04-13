@@ -4,7 +4,7 @@ header('Content-Type: text/html; charset=utf-8');
     
 require_once ('./config.php');
     
-
+    
 if (!isset($_SESSION['id'])) {
     htmlGetBack("You have not loged in", "login.php", "Go Back");
     logAction($conn, "empty", "empty");
@@ -14,11 +14,11 @@ if (!isset($_SESSION['id'])) {
 $conn;
 
 $userid = $_SESSION['id'];
-    
-$sesusername;
+$phone_number;
 
-if(isset($_SESSION['username'])){
-    $sesusername = $_SESSION['username'];
+    
+if(isset($_SESSION['phone_number'])){
+    $phone_number = $_SESSION['phone_number'];
     $loged = array("is_loged"=>1);
     $loged_encoded = json_encode($loged);
 }
@@ -27,18 +27,14 @@ if(isset($_SESSION['username'])){
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
- 
- $result = mysqli_query($conn,"SELECT * FROM Users WHERE uname = '$sesusername'");
-
+ $result = mysqli_query($conn,"SELECT * FROM Users WHERE phone_number = '$phone_number'");
+    
     $json = [];
     while($row = mysqli_fetch_assoc($result)){
       $json[] = $row;
     }
 
     $row_encoded = json_encode($json);
-
-//if (!empty($_SESSION)) {
-
     
     
 print('<!DOCTYPE html>
@@ -241,7 +237,7 @@ function initMap() {
       
     setInputFilter(document.getElementById('search_num'), function(value) {
     return /^-?\d*$/.test(value); });
-      searchFunc();
+    searchFunc();
     update();
 
 }
@@ -251,7 +247,6 @@ function initMap() {
       search_num = document.getElementById('search_num').value;
       getLines();
       }
-      
 //--------------------------------------------------------------------
 
       function setInputFilter(textbox, inputFilter) {
@@ -434,7 +429,8 @@ function DelPoint(){
       var directions;
       var line_number;
       var level;
-            
+    
+      
       if(user_info[0].user_type == 'Driver'){
 
             line_number = user_info[0].line_number;
@@ -481,7 +477,7 @@ function DelPoint(){
       
       }
               
-
+    
       var formData = {
          line_number: line_number
          ,lat: latlng.lat()
@@ -500,7 +496,6 @@ function DelPoint(){
               dataType: 'text',
               cache: false,
               success: function (result, status) {
-            
                  if(result == 200){
                      messagewindow.setContent('Successfully saved');
                     messagewindow.open(map);
@@ -607,16 +602,14 @@ function DelPoint(){
           
           if(position.length != 0){
                 var lines = position[0].coordinates.split(',');
-                console.log(position[0].coordinates);
+                
                 var lineCor = [];
                 for (var i = 0; i < (lines.length - 1); i += 2){
                       lineCor.push(new google.maps.LatLng(parseFloat(lines[i]), parseFloat(lines[i + 1])));
                       
                 }
                 
-                for (var i = 0; i < lineCor.length; i++){
-                    console.log(i + ' :' + lineCor[i].lat() + ' ' + lineCor[i].lng() + ' ' );
-                }
+              
       
                 if(lineCor.length != 0){
                       flightPath = new google.maps.Polyline({
@@ -645,8 +638,6 @@ function DelPoint(){
       
       
       function updatePoints(position) {
-//      alert(position);
-     // alert(' status ' + status);
           var lat;
           var lng;
       
@@ -746,7 +737,7 @@ function DelPoint(){
                   statewindow.close();
                  }
                                  
-                if (position[i].name == '$sesusername') {
+                if (position[i].phone_number == '$phone_number') {
 
                      statewindow= new google.maps.InfoWindow({
                          content:
@@ -759,7 +750,7 @@ function DelPoint(){
                         '</div>'
                     });
                                  
-                } else if (user_info.length === 0) {
+                } else if (user_info.length == 0) {
     
                     statewindow= new google.maps.InfoWindow({
                          content:
@@ -840,12 +831,6 @@ function DelPoint(){
       
           
              showMarkers();
-       
-          if (position.length > 1) {
-              //map.fitZoom();
-          } else {
-              map.setCenter (lat, lng);
-          }
       
    }
       
@@ -938,7 +923,6 @@ function DelPoint(){
                      dataType: 'text',
                      cache: false,
                      success: function (result, status) {
-                   // alert(result);
                   }
              });
       }

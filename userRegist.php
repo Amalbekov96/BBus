@@ -3,16 +3,13 @@ session_start();
 require_once("config.php");
 
 if (isset($_POST['Submit']))  {
-    
-    echo 'yes';
 
   $ip = $_SERVER['REMOTE_ADDR'];
-  $username = $_POST['username'];
   $phone_number = $_POST['phone_number'];
   $password = $_POST['password'];
   $con_password = $_POST['confirm_password'];
 
-  $result = mysqli_query($conn, "SELECT * FROM Users WHERE uname = '$username' OR phone_number = '$phone_number'");
+  $result = mysqli_query($conn, "SELECT * FROM Users WHERE phone_number = '$phone_number'");
   $row = mysqli_fetch_assoc($result);
 
   $message = "Go back";
@@ -22,8 +19,8 @@ if (isset($_POST['Submit']))  {
   if(mysqli_num_rows($result)== 0){
 
       
-    if (strlen($username) == 0) {
-    $prob = "You didn't input your username"; 
+    if (strlen($phone_number) == 0) {
+    $prob = "You didn't input your phone number";
     logError("$ip bypassed HTML and submitted empty username");
     }
 
@@ -37,34 +34,25 @@ if (isset($_POST['Submit']))  {
     logError("$ip bypassed HTML and submitted password less than 6 symbols");
         
     } else {
-    $prob = "Registration completed";
+    $prob = "Registration completed3";
     $message = "Back to login"; 
-    
+
     $password = trim($password);
-    $username = mysqli_escape_string($conn, $username);
+    $phone_number = mysqli_escape_string($conn, $phone_number);
     $password = mysqli_escape_string($conn, $password);
-    
         
-    mysqli_query($conn, "INSERT into Users (uname, pswd, phone_number, user_type, ip) values ('$username', '$password', '$phone_number', 'Passenger', '$ip');");
-    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where uname = '$username'");
+    mysqli_query($conn, "INSERT into Users (pswd, phone_number, user_type, ip) values ('$password', '$phone_number', 'Passenger', '$ip');");
+    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where phone_number = '$phone_number'");
     // logAction($conn, $username, "Created");  
     }
 
   } else {
 
-    if (strlen($username) == 0) {
-    $prob = "You didn't input your username"; 
-    logError("$ip bypassed HTML and submitted empty username");
-    }
-    else if (strlen($password) < 6) {
+    if (strlen($password) < 6) {
     $prob = "Password must be not less than 6 symbols";
     logError("$ip bypassed HTML and submitted password less than 6 symbols");
     }
       
-    else if ($username == $row['name']) {
-    $prob = "Username already exists";
-    logError("$ip tried to register under an existing username");
-    }
     else if (ipVerification($ip) != 0) {
     $prob = "There is already an account tied to this IP adress";
     logError("$ip tried to register for the second time");
@@ -79,14 +67,14 @@ if (isset($_POST['Submit']))  {
     }
     else {
 
-    $prob = "Registration completed";
+    $prob = "Registration completed2";
     $message = "Back to login"; 
     $password = trim($password);
-    $username = mysqli_escape_string($conn, $username);
+    $phone_number = mysqli_escape_string($conn, $phone_number);
     $password = mysqli_escape_string($conn, $password);
-    mysqli_query($conn, "INSERT into Users (uname, pswd, phone_number, user_type, ip) values ('$username', '$password', '$phone_number', 'Passenger', '$ip');");
-    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where uname = '$username'");
-    // logAction($conn, $username, "Created");  
+    mysqli_query($conn, "INSERT into Users (pswd, phone_number, user_type, ip) values ('$password', '$phone_number', 'Passenger', '$ip');");
+    mysqli_query($conn, "UPDATE Users set last_submission = '1970-1-1 11:11:11' where phone_number = '$phone_number'");
+
     }
   }
 
@@ -148,12 +136,6 @@ $html = '
                 <h2>Sign Up</h2>
                 <p>Please fill in this form to create passenger account!</p>
                 <hr>
-                <div class="form-group" >
-                    <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                        <input type="text" class="form-control" name="username" placeholder="Username" required="required">
-                    </div>
-                </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-phone"></i></span>
@@ -189,9 +171,11 @@ $html = '
     </center>
     
     <script type="text/javascript">
-     document.getElementById("Go_back").onclick = function () {
-         location.href = "login.php";
-     };
+    $(document).ready(function() {
+        document.getElementById("Go_back").onclick = function () {
+            location.href = "login.php";
+        };
+    });
     
     </script>
     </body>
